@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Leosac.$(AssemblyName)</PackageId>
+    <Version>1.0.0</Version>
+    <Product>Leosac WpfApp Library</Product>
+    <Description>C# Library components/helpers for Leosac branded Wpf applications .</Description>
+    <Company>Leosac SAS</Company>
+    <Authors>leosac</Authors>
+    <AssemblyTitle>Leosac WpfApp</AssemblyTitle>
+    <Copyright>Copyright © Leosac 2023</Copyright>
+    <PackageProjectUrl>https://github.com/leosac/wpfapp</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/leosac/wpfapp.git</RepositoryUrl>
+    <PackageTags>leosac dotnet wpf library</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RootNamespace>Leosac.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\flag_french.png" />
+    <None Remove="images\flag_usa.png" />
+    <None Remove="images\leosac.png" />
+    <None Remove="images\leosac_banner.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\flag_french.png" />
+    <Resource Include="images\flag_usa.png" />
+    <Resource Include="images\leosac.png" />
+    <Resource Include="images\leosac_banner.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
