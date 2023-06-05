@@ -58,6 +58,7 @@ namespace Leosac.WpfApp.Domain
                     Application.Current.Shutdown();
                 });
 
+            SnackbarMessageQueue = snackbarMessageQueue;
             MenuItems = new ObservableCollection<NavItem>();
             if (LeosacAppInfo.Instance != null)
             {
@@ -68,8 +69,6 @@ namespace Leosac.WpfApp.Domain
                 SelectedItem = MenuItems[0];
                 SelectedIndex = 0;
             }
-
-            SnackbarMessageQueue = snackbarMessageQueue;
             _navItemsView = CollectionViewSource.GetDefaultView(MenuItems);
             if (LeosacAppInfo.Instance.CheckPlan)
             {
