@@ -475,7 +475,7 @@ namespace Leosac.WpfApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Souscrire.
+        ///   Looks up a localized string similar to Subscribe.
         /// </summary>
         public static string Subscribe {
             get {

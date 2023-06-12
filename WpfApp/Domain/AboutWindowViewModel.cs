@@ -21,7 +21,6 @@ namespace Leosac.WpfApp.Domain
 
             public string? Description { get; private set; }
 
-
             public string? Url { get; private set; }
         }
 
@@ -41,6 +40,7 @@ namespace Leosac.WpfApp.Domain
                 new Library("Json.NET", "MIT", "JSON library", "https://www.newtonsoft.com/json")
             });
 
+            _showSourceCodeLicense = true;
             LeosacAppInfo.Instance.InitializeAboutWindow(this);
 
             var plan = MaintenancePlan.GetSingletonInstance();
@@ -54,6 +54,7 @@ namespace Leosac.WpfApp.Domain
         private AutoUpdate _autoUpdate;
         private bool _isActivePlan;
         private DateTime? _expirationDate;
+        private bool _showSourceCodeLicense;
 
         public string? SoftwareName
         {
@@ -89,6 +90,12 @@ namespace Leosac.WpfApp.Domain
         {
             get => _expirationDate;
             set => SetProperty(ref _expirationDate, value);
+        }
+
+        public bool ShowSourceCodeLicense
+        {
+            get => _showSourceCodeLicense;
+            set => SetProperty(ref _showSourceCodeLicense, value);
         }
 
         public ObservableCollection<Library> Libraries { get; }

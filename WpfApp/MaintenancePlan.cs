@@ -18,8 +18,9 @@ namespace Leosac.WpfApp
     /// Maintenance plan.
     /// </summary>
     /// <remarks>
-    /// This is not a security feature neither a proper licensing feature. You are free to remove this code and recompile the application. A generator could also easily be created.
+    /// This is not a security feature neither a proper licensing feature. A generator could easily be created.
     /// It is mainly designed to help Leosac company to manage the commercial plans provided to customers and the appropriate registered support services.
+    /// It is also a way to drive end-users making profits with this software to commercialisation, for their own benefits (support of the software editor, maintenance support, ...).
     /// </remarks>
     public class MaintenancePlan : PermanentConfig<MaintenancePlan>
     {

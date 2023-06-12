@@ -18,6 +18,7 @@ namespace Leosac.WpfApp
             var fvi = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location);
             ApplicationName = ApplicationTitle = fvi.ProductName ?? "Leosac Application";
             CheckPlan = true;
+            PerUserInstallation = true;
             ApplicationUrl = "https://leosac.com";
             ApplicationLogo = "/WpfApp;component/images/leosac.png";
             SettingsCommand = null;
@@ -34,6 +35,8 @@ namespace Leosac.WpfApp
         public string ApplicationLogo { get; protected set; }
 
         public bool CheckPlan { get; protected set; }
+
+        public bool PerUserInstallation { get; protected set; }
 
         public LeosacAppCommand? SettingsCommand { get; protected set; }
 

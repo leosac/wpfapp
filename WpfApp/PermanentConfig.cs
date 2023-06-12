@@ -64,7 +64,7 @@ namespace Leosac.WpfApp
 
         public static string GetConfigFilePath(string fileName, bool createFolders = false)
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appData = LeosacAppInfo.Instance.PerUserInstallation ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(appData, "Leosac");
             if (!Directory.Exists(path) && createFolders)
                 Directory.CreateDirectory(path);
