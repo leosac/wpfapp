@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Media.Animation;
 
 namespace Leosac.WpfApp
@@ -110,7 +111,7 @@ namespace Leosac.WpfApp
             var success = (bool?)jobj["success"];
             if (!success.GetValueOrDefault(false))
             {
-                var error = String.Format("The request failed with error: {0}.", (string?)jobj["data"]?["error"]);
+                var error = String.Format("The request failed with error: {0}", (string?)jobj["data"]?["error"] ?? (string?)jobj["data"]?["message"]);
                 log.Error(error);
                 throw new Exception(error);
             }
@@ -130,8 +131,12 @@ namespace Leosac.WpfApp
                 var data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=check&product_id={1}&serial_key={2}", BASE_URL, fragments[0], licenseKey));
                 DateTime? expire = null;
                 if (data?["expire_date"] != null)
-                    expire = DateTime.Parse((string)data["expire_date"]!);
-                data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), email, Environment.OSVersion));
+                {
+                    var strexpire = (string)data?["expire_date"];
+                    if (!string.IsNullOrEmpty(strexpire))
+                        expire = DateTime.Parse(strexpire);
+                }
+                data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion));
 
                 var msg = (string?)(data?["message"]);
                 log.Info(String.Format("Registration succeeded with message: {0}.", msg));
