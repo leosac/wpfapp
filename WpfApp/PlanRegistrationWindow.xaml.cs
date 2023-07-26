@@ -42,7 +42,7 @@ namespace Leosac.WpfApp
                 try
                 {
                     var plan = MaintenancePlan.GetSingletonInstance();
-                    plan.RegisterPlan(model.Key, model.Code);
+                    plan.RegisterPlan(model.Key, null, model.Code);
 
                     this.DialogResult = true;
                 }
