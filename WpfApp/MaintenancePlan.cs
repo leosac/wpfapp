@@ -164,7 +164,7 @@ namespace Leosac.WpfApp
             }
         }
 
-        public string? ComputeCode()
+        public string? ComputeCode(string? uuid = null)
         {
             if (!string.IsNullOrEmpty(LicenseKey))
             {
@@ -173,7 +173,7 @@ namespace Leosac.WpfApp
                 {
                     expiration = ExpirationDate.Value.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
                 }
-                var key = GetUUIDKey();
+                var key = GetUUIDKey(uuid);
                 if (key != null)
                 {
                     var aes = Aes.Create();
@@ -217,9 +217,13 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private byte[]? GetUUIDKey()
+        private byte[]? GetUUIDKey(string? uuid = null)
         {
-            var uuid = GetUUID();
+            if (string.IsNullOrEmpty(uuid))
+            {
+                uuid = GetUUID();
+            }
+
             if (!string.IsNullOrEmpty(uuid))
             {
                 var deriv = new Rfc2898DeriveBytes(uuid, Encoding.UTF8.GetBytes("Security Freedom"));
