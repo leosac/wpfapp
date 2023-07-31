@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Leosac.WpfApp.Domain;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Leosac.WpfApp
 {
-    public abstract class PermanentConfig<T> where T : PermanentConfig<T>, new()
+    public abstract class PermanentConfig<T> : ViewModelBase where T : PermanentConfig<T>, new()
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
         static JsonSerializerSettings _jsonSettings;
@@ -25,7 +22,10 @@ namespace Leosac.WpfApp
             };
         }
 
-        public abstract string GetDefaultFileName();
+        public static string GetDefaultFileName()
+        {
+            return string.Format("{0}.json", typeof(T).Name);
+        }
 
         public virtual void SaveToFile()
         {
@@ -38,6 +38,11 @@ namespace Leosac.WpfApp
             var serialized = JsonConvert.SerializeObject(this, _jsonSettings);
             System.IO.File.WriteAllText(filePath, serialized, Encoding.UTF8);
             log.Info("Configuration saved.");
+        }
+
+        public static T? LoadFromFile()
+        {
+            return LoadFromFile(GetDefaultFileName());
         }
 
         public static T? LoadFromFile(string filePath)

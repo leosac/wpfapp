@@ -65,6 +65,8 @@ namespace Leosac.WpfApp
             {
                 model.InitFromSettings();
             }
+
+            LeosacAppInfo.Instance?.OnAppLoaded();
         }
     }
 }

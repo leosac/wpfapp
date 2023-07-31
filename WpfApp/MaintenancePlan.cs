@@ -28,7 +28,6 @@ namespace Leosac.WpfApp
         const string BASE_URL = "https://leosac.com/";
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
-        public static string DefaultFileName { get => "MaintenancePlan.json"; }
 
         private static object _objlock = new object();
         private static MaintenancePlan? _singleton;
@@ -47,19 +46,9 @@ namespace Leosac.WpfApp
             }
         }
 
-        public static MaintenancePlan? LoadFromFile()
-        {
-            return LoadFromFile(GetConfigFilePath(DefaultFileName));
-        }
-
         public MaintenancePlan()
         {
 
-        }
-
-        public override string GetDefaultFileName()
-        {
-            return DefaultFileName;
         }
 
         public string? LicenseKey { get; set; }

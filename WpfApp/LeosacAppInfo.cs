@@ -43,5 +43,9 @@ namespace Leosac.WpfApp
         public abstract void InitializeMainWindow(MainWindowViewModel model);
 
         public abstract void InitializeAboutWindow(AboutWindowViewModel model);
+
+        public virtual void OnAppLoaded()
+        {
+        }
     }
 }

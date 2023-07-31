@@ -29,21 +29,11 @@ namespace Leosac.WpfApp
             }
         }
 
-        public static AppSettings? LoadFromFile()
-        {
-            return LoadFromFile(GetConfigFilePath(DefaultFileName));
-        }
-
         public AppSettings()
         {
             InstallationId = Guid.NewGuid().ToString("D");
             UseDarkTheme = false;
             IsAutoUpdateEnabled = true;
-        }
-
-        public override string GetDefaultFileName()
-        {
-            return DefaultFileName;
         }
 
         public string InstallationId { get; set; }
