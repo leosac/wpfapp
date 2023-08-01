@@ -11,8 +11,6 @@ namespace Leosac.WpfApp
 {
     public class AppSettings : PermanentConfig<AppSettings>
     {
-        public static string DefaultFileName { get => "AppSettings.json"; }
-
         private static object _objlock = new object();
         private static AppSettings? _singleton;
 

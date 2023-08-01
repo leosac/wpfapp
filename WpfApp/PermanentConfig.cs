@@ -42,7 +42,7 @@ namespace Leosac.WpfApp
 
         public static T? LoadFromFile()
         {
-            return LoadFromFile(GetDefaultFileName());
+            return LoadFromFile(GetConfigFilePath(GetDefaultFileName()));
         }
 
         public static T? LoadFromFile(string filePath)
