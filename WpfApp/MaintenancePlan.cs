@@ -191,7 +191,7 @@ namespace Leosac.WpfApp
                     {
                         if (LicenseKey == fragments[1])
                         {
-                            ExpirationDate = DateTime.ParseExact(fragments[2], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                            ExpirationDate = !string.IsNullOrEmpty(fragments[2]) ? DateTime.ParseExact(fragments[2], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture) : null;
                             Code = code;
                             return true;
                         }
