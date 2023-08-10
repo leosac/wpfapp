@@ -38,8 +38,15 @@ namespace Leosac.WpfApp
             {
                 if (_singleton == null || forceRecreate)
                 {
-                    _singleton = LoadFromFile();
-                    _singleton?.ParseCode(_singleton.Code);
+                    try
+                    {
+                        _singleton = LoadFromFile();
+                        _singleton?.ParseCode(_singleton.Code);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error("Maintenance Plan initialization failed.", ex);
+                    }
                 }
 
                 return _singleton!;
@@ -228,6 +235,12 @@ namespace Leosac.WpfApp
             var settings = AppSettings.GetSingletonInstance();
             if (settings.InstallationId.Length > 12)
             {
+                // Be sure to save the InstallationId
+                if (!File.Exists(settings.GetConfigFilePath()))
+                {
+                    settings.SaveToFile();
+                }
+
                 var hash = MD5.Create();
                 uuid = Convert.ToHexString(hash.ComputeHash(Encoding.UTF8.GetBytes(String.Format("{0}:{1}", settings.InstallationId, Environment.MachineName))));
             }
