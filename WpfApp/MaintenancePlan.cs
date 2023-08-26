@@ -91,7 +91,7 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private JToken? QueryData(string url)
+        private JToken? QueryData(string url, string[]? ignoreErrorCodes = null)
         {
             var client = new HttpClient();
             var req = client.GetStringAsync(url);
@@ -107,9 +107,17 @@ namespace Leosac.WpfApp
             var success = (bool?)jobj["success"];
             if (!success.GetValueOrDefault(false))
             {
-                var error = String.Format("The request failed with error: {0}", (string?)jobj["data"]?["error"] ?? (string?)jobj["data"]?["message"]);
-                log.Error(error);
-                throw new Exception(error);
+                var errorCode = (string?)jobj["data"]?["code"];
+                if (ignoreErrorCodes != null && !string.IsNullOrEmpty(errorCode) && ignoreErrorCodes.Contains(errorCode))
+                {
+                    log.Info(string.Format("Error code `{0}` ignored.", errorCode));
+                }
+                else
+                {
+                    var error = string.Format("The request failed with error: {0}", (string?)jobj["data"]?["error"] ?? (string?)jobj["data"]?["message"]);
+                    log.Error(error);
+                    throw new Exception(error);
+                }
             }
 
             return jobj["data"];
@@ -128,11 +136,11 @@ namespace Leosac.WpfApp
                 DateTime? expire = null;
                 if (data?["expire_date"] != null)
                 {
-                    var strexpire = (string)data?["expire_date"];
+                    var strexpire = (string?)data?["expire_date"];
                     if (!string.IsNullOrEmpty(strexpire))
                         expire = DateTime.Parse(strexpire);
                 }
-                data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion));
+                data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion), new string[] { "instance_already_activated" });
 
                 var msg = (string?)(data?["message"]);
                 log.Info(String.Format("Registration succeeded with message: {0}.", msg));
@@ -242,7 +250,7 @@ namespace Leosac.WpfApp
                 }
 
                 var hash = MD5.Create();
-                uuid = Convert.ToHexString(hash.ComputeHash(Encoding.UTF8.GetBytes(String.Format("{0}:{1}", settings.InstallationId, Environment.MachineName))));
+                uuid = Convert.ToHexString(hash.ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", settings.InstallationId, Environment.MachineName))));
             }
             return uuid;
         }
@@ -266,16 +274,16 @@ namespace Leosac.WpfApp
 
         public static string GetPlanUrl(string key)
         {
-            return String.Format("{0}/show-plan?serial_key={1}", BASE_URL, key);
+            return string.Format("{0}/show-plan?serial_key={1}", BASE_URL, key);
         }
 
         public static string GetOfflineRegistrationUrl(string? key, string? uuid)
         {
-            var url = String.Format("{0}register-plan?", BASE_URL);
+            var url = string.Format("{0}register-plan?", BASE_URL);
             if (!string.IsNullOrEmpty(key))
-                url += String.Format("serial_key={0}&", key);
+                url += string.Format("serial_key={0}&", key);
             if (!string.IsNullOrEmpty(uuid))
-                url += String.Format("instance={0}", uuid);
+                url += string.Format("instance={0}", uuid);
             return url;
         }
     }
