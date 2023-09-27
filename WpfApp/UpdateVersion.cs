@@ -1,13 +1,8 @@
-﻿using Leosac.WpfApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Leosac.WpfApp
 {
-    public class UpdateVersion : ViewModelBase
+    public class UpdateVersion : ObservableObject
     {
         public UpdateVersion()
         {

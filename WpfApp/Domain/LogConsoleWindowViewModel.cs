@@ -1,10 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace Leosac.WpfApp.Domain
 {
-    public class LogConsoleWindowViewModel : ViewModelBase
+    public class LogConsoleWindowViewModel : ObservableObject
     {
         public LogConsoleWindowViewModel()
         {
@@ -18,16 +20,16 @@ namespace Leosac.WpfApp.Domain
             {
                 10, 50, 100, 250, 500, 1000
             });
-            ClearCommand = new LeosacAppCommand(
-                parameter =>
+            ClearCommand = new RelayCommand(
+                () =>
                 {
                     if (Log != null)
                     {
                         Log.ClearNotifications();
                     }
                 });
-            SaveCommand = new LeosacAppCommand(
-                parameter =>
+            SaveCommand = new RelayCommand(
+                () =>
                 {
                     if (Log != null)
                     {
@@ -40,8 +42,8 @@ namespace Leosac.WpfApp.Domain
                         }
                     }
                 });
-            CutCommand = new LeosacAppCommand(
-                parameter =>
+            CutCommand = new RelayCommand(
+                () =>
                 {
                     if (Log != null)
                     {
@@ -49,8 +51,8 @@ namespace Leosac.WpfApp.Domain
                         Log.ClearNotifications();
                     }
                 });
-            CopyCommand = new LeosacAppCommand(
-                parameter =>
+            CopyCommand = new RelayCommand(
+                () =>
                 {
                     if (Log != null)
                     {
@@ -79,12 +81,12 @@ namespace Leosac.WpfApp.Domain
 
         public ObservableCollection<int> MaxLines { get; set; }
 
-        public LeosacAppCommand ClearCommand { get; }
+        public RelayCommand ClearCommand { get; }
 
-        public LeosacAppCommand SaveCommand { get; }
+        public RelayCommand SaveCommand { get; }
 
-        public LeosacAppCommand CutCommand { get; }
+        public RelayCommand CutCommand { get; }
 
-        public LeosacAppCommand CopyCommand { get; }
+        public RelayCommand CopyCommand { get; }
     }
 }

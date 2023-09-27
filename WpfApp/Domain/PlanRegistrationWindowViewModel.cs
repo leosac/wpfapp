@@ -1,6 +1,8 @@
-﻿namespace Leosac.WpfApp.Domain
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Leosac.WpfApp.Domain
 {
-    public class PlanRegistrationWindowViewModel : ViewModelBase
+    public class PlanRegistrationWindowViewModel : ObservableObject
     {
         public PlanRegistrationWindowViewModel()
         {

@@ -6,11 +6,12 @@ using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows;
-using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Leosac.WpfApp.Domain
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ObservableObject
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 
@@ -18,26 +19,21 @@ namespace Leosac.WpfApp.Domain
         {
             log.Debug("Initializing KeyManager MainWindow view model...");
 
-            LogConsoleCommand = new LeosacAppCommand(
-                parameter =>
+            LogConsoleCommand = new RelayCommand(
+                () =>
                 {
                     var consoleWindow = new LogConsoleWindow();
                     consoleWindow.Show();
                 });
-            OpenAboutCommand = new LeosacAppCommand(
-                parameter =>
+            OpenAboutCommand = new RelayCommand(
+                () =>
                 {
                     var aboutWindow = new AboutWindow();
                     aboutWindow.ShowDialog();
                 });
-            ChangeLanguageCommand = new LeosacAppCommand(
-                parameter =>
+            ChangeLanguageCommand = new RelayCommand<string?>(
+                lang =>
                 {
-                    string? lang = null;
-                    if (parameter != null)
-                    {
-                        lang = parameter.ToString();
-                    }
                     if (string.IsNullOrEmpty(lang))
                     {
                         lang = "en-US";
@@ -120,9 +116,9 @@ namespace Leosac.WpfApp.Domain
             }
         }
 
-        public LeosacAppCommand LogConsoleCommand { get; }
-        public LeosacAppCommand OpenAboutCommand { get; }
-        public LeosacAppCommand ChangeLanguageCommand { get; }
+        public RelayCommand LogConsoleCommand { get; }
+        public RelayCommand OpenAboutCommand { get; }
+        public RelayCommand<string?> ChangeLanguageCommand { get; }
 
         private static void ModifyTheme(bool isDarkTheme)
         {

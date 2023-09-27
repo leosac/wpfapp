@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Leosac.WpfApp.Domain
 {
-    public class NavItem : ViewModelBase
+    public class NavItem : ObservableObject
     {
         private readonly Type _contentType;
         private object? _dataContext;

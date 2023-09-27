@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Leosac.WpfApp.Domain
 {
-    public class AboutWindowViewModel : ViewModelBase
+    public class AboutWindowViewModel : ObservableObject
     {
         public class Library
         {
@@ -37,7 +38,8 @@ namespace Leosac.WpfApp.Domain
                 new Library("Microsoft.WindowsDesktop.App.WPF", "MIT", ".NET Core UI Framework", "https://github.com/dotnet/wpf"),
                 new Library("log4net", "Apache v2", "Logging library", "https://logging.apache.org/log4net/"),
                 new Library("MaterialDesignInXaml", "MIT", "Graphic library", "http://materialdesigninxaml.net/"),
-                new Library("Json.NET", "MIT", "JSON library", "https://www.newtonsoft.com/json")
+                new Library("Json.NET", "MIT", "JSON library", "https://www.newtonsoft.com/json"),
+                new Library("CommunityToolkit.Mvvm", "MIT", "MVVM library", "https://github.com/CommunityToolkit/dotnet")
             });
 
             _showSourceCodeLicense = true;

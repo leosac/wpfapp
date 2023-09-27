@@ -1,17 +1,12 @@
-﻿using Leosac.WpfApp.Domain;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Leosac.WpfApp
 {
-    public class AutoUpdate : ViewModelBase
+    public class AutoUpdate : ObservableObject
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 

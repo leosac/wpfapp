@@ -1,4 +1,4 @@
-﻿using Leosac.WpfApp.Domain;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Leosac.WpfApp
 {
-    public abstract class PermanentConfig<T> : ViewModelBase where T : PermanentConfig<T>, new()
+    public abstract class PermanentConfig<T> : ObservableObject where T : PermanentConfig<T>, new()
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
         static JsonSerializerSettings _jsonSettings;

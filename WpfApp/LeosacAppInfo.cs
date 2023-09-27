@@ -1,4 +1,5 @@
-﻿using Leosac.WpfApp.Domain;
+﻿using CommunityToolkit.Mvvm.Input;
+using Leosac.WpfApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,7 +39,7 @@ namespace Leosac.WpfApp
 
         public bool PerUserInstallation { get; protected set; }
 
-        public LeosacAppCommand? SettingsCommand { get; protected set; }
+        public RelayCommand? SettingsCommand { get; protected set; }
 
         public abstract void InitializeMainWindow(MainWindowViewModel model);
 
