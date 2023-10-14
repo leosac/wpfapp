@@ -2,7 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows;
@@ -46,7 +45,7 @@ namespace Leosac.WpfApp.Domain
                     LangHelper.ChangeLanguage(lang);
 
                     // Restart the application to be sure already created Windows have expected language
-                    var module = Process.GetCurrentProcess().MainModule;
+                    var module = System.Diagnostics.Process.GetCurrentProcess().MainModule;
                     if (module != null && !string.IsNullOrEmpty(module.FileName))
                     {
                         System.Diagnostics.Process.Start(module.FileName);
@@ -56,17 +55,13 @@ namespace Leosac.WpfApp.Domain
 
             SnackbarMessageQueue = snackbarMessageQueue;
             MenuItems = new ObservableCollection<NavItem>();
-            if (LeosacAppInfo.Instance != null)
-            {
-                LeosacAppInfo.Instance.InitializeMainWindow(this);
-            }
+            LeosacAppInfo.Instance?.InitializeMainWindow(this);
             if (MenuItems.Count > 0)
             {
                 SelectedItem = MenuItems[0];
                 SelectedIndex = 0;
             }
-            _navItemsView = CollectionViewSource.GetDefaultView(MenuItems);
-            if (LeosacAppInfo.Instance.CheckPlan)
+            if (LeosacAppInfo.Instance != null && LeosacAppInfo.Instance.CheckPlan)
             {
                 var plan = MaintenancePlan.GetSingletonInstance();
                 _showPlanFooter = !plan.IsActivePlan();
@@ -78,7 +73,6 @@ namespace Leosac.WpfApp.Domain
             }
         }
 
-        private readonly ICollectionView _navItemsView;
         private NavItem? _selectedItem;
         private int _selectedIndex;
         private bool _showPlanFooter;
@@ -129,7 +123,7 @@ namespace Leosac.WpfApp.Domain
             paletteHelper.SetTheme(theme);
         }
 
-        public void ModifyAndSaveTheme(bool isDarkTheme)
+        public static void ModifyAndSaveTheme(bool isDarkTheme)
         {
             ModifyTheme(isDarkTheme);
 
@@ -150,16 +144,22 @@ namespace Leosac.WpfApp.Domain
                 var update = new AutoUpdate();
                 if (update.CheckUpdate())
                 {
-                    var wrapControl = new WrapPanel();
-                    wrapControl.Orientation = Orientation.Horizontal;
-                    wrapControl.Margin = new Thickness(5);
-                    wrapControl.HorizontalAlignment = HorizontalAlignment.Center;
-                    wrapControl.VerticalAlignment = VerticalAlignment.Center;
-                    var textControl = new TextBlock();
-                    textControl.Text = Properties.Resources.NewUpdateAvailable;
+                    var wrapControl = new WrapPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    var textControl = new TextBlock
+                    {
+                        Text = Properties.Resources.NewUpdateAvailable
+                    };
                     wrapControl.Children.Add(textControl);
-                    var buttonControl = new Button();
-                    buttonControl.Content = Properties.Resources.DownloadNow;
+                    var buttonControl = new Button
+                    {
+                        Content = Properties.Resources.DownloadNow
+                    };
                     buttonControl.Click += (sender, e) => { update.DownloadUpdate(); };
                     buttonControl.Style = Application.Current.FindResource("MaterialDesignFlatButton") as Style;
                     buttonControl.Margin = new Thickness(20, 0, 0, 0);

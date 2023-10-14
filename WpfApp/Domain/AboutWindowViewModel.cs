@@ -43,7 +43,7 @@ namespace Leosac.WpfApp.Domain
             });
 
             _showSourceCodeLicense = true;
-            LeosacAppInfo.Instance.InitializeAboutWindow(this);
+            LeosacAppInfo.Instance?.InitializeAboutWindow(this);
 
             var plan = MaintenancePlan.GetSingletonInstance();
             _isActivePlan = plan.IsActivePlan();

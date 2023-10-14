@@ -8,25 +8,34 @@ namespace Leosac.WpfApp
 {
     public static class SnackbarHelper
     {
-        public static void EnqueueError(ISnackbarMessageQueue queue, string message)
+        public static void EnqueueError(ISnackbarMessageQueue? queue, string message)
         {
             EnqueueError(queue, null, message);
         }
 
-        public static void EnqueueError(ISnackbarMessageQueue queue, Exception? ex, string? message = null)
+        public static void EnqueueError(ISnackbarMessageQueue? queue, Exception? ex, string? message = null)
         {
             if (ex != null)
             {
-                if (message == null) message = ex.Message;
-                else message += ": " + ex.Message;
+                if (message == null)
+                {
+                    message = ex.Message;
+                }
+                else
+                {
+                    message += ": " + ex.Message;
+                }
             }
 
-            if (string.IsNullOrEmpty(message)) message = "An error occured.";
+            if (string.IsNullOrEmpty(message))
+            {
+                message = "An error occured.";
+            }
 
             EnqueueMessage(queue, message);
         }
 
-        public static void EnqueueMessage(ISnackbarMessageQueue queue, object message)
+        public static void EnqueueMessage(ISnackbarMessageQueue? queue, object message)
         {
             queue?.Enqueue(message, new PackIcon { Kind = PackIconKind.CloseBold }, (object? p) => { }, null, false, true, TimeSpan.FromSeconds(5));
         }
@@ -36,9 +45,11 @@ namespace Leosac.WpfApp
             if (!e.Handled)
             {
                 e.Handled = true;
-                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
-                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
-                eventArg.Source = sender;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+                {
+                    RoutedEvent = UIElement.MouseWheelEvent,
+                    Source = sender
+                };
                 var parent = ((Control)sender).Parent as UIElement;
                 parent?.RaiseEvent(eventArg);
             }

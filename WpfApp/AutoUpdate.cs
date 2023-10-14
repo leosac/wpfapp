@@ -27,43 +27,39 @@ namespace Leosac.WpfApp
                 var client = new HttpClient();
                 if (string.IsNullOrEmpty(LeosacAppInfo.Instance?.ApplicationCode))
                     throw new Exception("Application Code is required to check for updates.");
-                using (var response = client.GetAsync(String.Format("https://download.leosac.com/{0}/latestversion", LeosacAppInfo.Instance.ApplicationCode)).Result)
+                using var response = client.GetAsync(string.Format("https://download.leosac.com/{0}/latestversion", LeosacAppInfo.Instance.ApplicationCode)).Result;
+                using var content = response.Content;
+                var json = content.ReadAsStringAsync().Result;
+                UpdateVersion = JsonConvert.DeserializeObject<UpdateVersion>(json);
+
+                if (UpdateVersion != null)
                 {
-                    using (var content = response.Content)
+                    var fvi = AppSettings.GetFileVersionInfo();
+
+                    if (!string.IsNullOrEmpty(fvi?.ProductVersion) && !string.IsNullOrEmpty(UpdateVersion.VersionString))
                     {
-                        var json = content.ReadAsStringAsync().Result;
-                        UpdateVersion = JsonConvert.DeserializeObject<UpdateVersion>(json);
+                        var currentVersion = new Version(fvi.ProductVersion);
+                        var newVersion = new Version(UpdateVersion.VersionString);
 
-                        if (UpdateVersion != null)
+                        if (newVersion > currentVersion)
                         {
-                            var fvi = AppSettings.GetFileVersionInfo();
-
-                            if (!string.IsNullOrEmpty(fvi?.ProductVersion) && !string.IsNullOrEmpty(UpdateVersion.VersionString))
-                            {
-                                var currentVersion = new Version(fvi.ProductVersion);
-                                var newVersion = new Version(UpdateVersion.VersionString);
-
-                                if (newVersion > currentVersion)
-                                {
-                                    log.Info("New update available!");
-                                    HasUpdate = true;
-                                }
-                                else
-                                {
-                                    log.Info("There is no update available.");
-                                    HasUpdate = false;
-                                }
-                            }
-                            else
-                            {
-                                log.Error("Cannot retrieve software versions.");
-                            }
+                            log.Info("New update available!");
+                            HasUpdate = true;
                         }
                         else
                         {
-                            log.Error("Cannot unserialize the software update.");
+                            log.Info("There is no update available.");
+                            HasUpdate = false;
                         }
                     }
+                    else
+                    {
+                        log.Error("Cannot retrieve software versions.");
+                    }
+                }
+                else
+                {
+                    log.Error("Cannot unserialize the software update.");
                 }
             }
             catch (Exception ex)
@@ -89,7 +85,7 @@ namespace Leosac.WpfApp
 
         public void DownloadUpdate()
         {
-            if (UpdateVersion != null)
+            if (!string.IsNullOrEmpty(UpdateVersion?.Uri))
             {
                 var ps = new ProcessStartInfo(UpdateVersion.Uri)
                 {

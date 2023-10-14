@@ -1,18 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Leosac.WpfApp.Domain;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Leosac.WpfApp
 {
     public abstract class LeosacAppInfo
     {
-        public static LeosacAppInfo Instance { get; set; }
+        public static LeosacAppInfo? Instance { get; set; }
 
         public LeosacAppInfo()
         {
@@ -29,7 +24,7 @@ namespace Leosac.WpfApp
 
         public string ApplicationTitle { get; protected set; }
 
-        public string ApplicationCode { get; protected set; }
+        public string? ApplicationCode { get; protected set; }
 
         public string ApplicationUrl { get; protected set; }
 

@@ -11,7 +11,7 @@ namespace Leosac.WpfApp
         }
 
         private string _versionString;
-        private string _uri;
+        private string? _uri;
 
         public string VersionString
         {
@@ -19,7 +19,7 @@ namespace Leosac.WpfApp
             set => SetProperty(ref _versionString, value);
         }
 
-        public string Uri
+        public string? Uri
         {
             get => _uri;
             set => SetProperty(ref _uri, value);

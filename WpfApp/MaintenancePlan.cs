@@ -29,7 +29,7 @@ namespace Leosac.WpfApp
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 
-        private static object _objlock = new object();
+        private static readonly object _objlock = new();
         private static MaintenancePlan? _singleton;
 
         public static MaintenancePlan GetSingletonInstance(bool forceRecreate = false)
@@ -66,14 +66,11 @@ namespace Leosac.WpfApp
         public string? Code { get; set; }
 
         [JsonIgnore]
-        public EventHandler? PlanUpdated;
+        public EventHandler? PlanUpdated { get; set; }
 
         public void OnPlanUpdated()
         {
-            if (PlanUpdated != null)
-            {
-                PlanUpdated(this, new EventArgs());
-            }
+            PlanUpdated?.Invoke(this, new EventArgs());
         }
 
         public override void SaveToFile()
@@ -91,7 +88,7 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private JToken? QueryData(string url, string[]? ignoreErrorCodes = null)
+        private static JToken? QueryData(string url, string[]? ignoreErrorCodes = null)
         {
             var client = new HttpClient();
             var req = client.GetStringAsync(url);
@@ -221,7 +218,7 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private byte[]? GetUUIDKey(string? uuid = null)
+        private static byte[]? GetUUIDKey(string? uuid = null)
         {
             if (string.IsNullOrEmpty(uuid))
             {
@@ -230,14 +227,16 @@ namespace Leosac.WpfApp
 
             if (!string.IsNullOrEmpty(uuid))
             {
+#pragma warning disable SYSLIB0041 // Type or member is obsolete
                 var deriv = new Rfc2898DeriveBytes(uuid, Encoding.UTF8.GetBytes("Security Freedom"));
+#pragma warning restore SYSLIB0041 // Type or member is obsolete
                 return deriv.GetBytes(16);
             }
 
             return null;
         }
 
-        public string? GetUUID()
+        public static string? GetUUID()
         {
             string? uuid = null;
             var settings = AppSettings.GetSingletonInstance();
@@ -248,22 +247,22 @@ namespace Leosac.WpfApp
                 {
                     settings.SaveToFile();
                 }
-
-                var hash = MD5.Create();
-                uuid = Convert.ToHexString(hash.ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", settings.InstallationId, Environment.MachineName))));
+                uuid = Convert.ToHexString(MD5.HashData(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", settings.InstallationId, Environment.MachineName))));
             }
             return uuid;
         }
 
         public static void OpenSubscription()
         {
-            var settings = AppSettings.GetSingletonInstance();
-            var ps = new ProcessStartInfo(LeosacAppInfo.Instance.ApplicationUrl)
+            if (!string.IsNullOrEmpty(LeosacAppInfo.Instance?.ApplicationUrl))
             {
-                UseShellExecute = true,
-                Verb = "open"
-            };
-            Process.Start(ps);
+                var ps = new ProcessStartInfo(LeosacAppInfo.Instance.ApplicationUrl)
+                {
+                    UseShellExecute = true,
+                    Verb = "open"
+                };
+                Process.Start(ps);
+            }
         }
 
         public static void OpenRegistration()

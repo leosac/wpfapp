@@ -8,7 +8,7 @@ namespace Leosac.WpfApp.Domain
         {
             var plan = MaintenancePlan.GetSingletonInstance();
             _key = plan.LicenseKey;
-            _uuid = plan.GetUUID();
+            _uuid = MaintenancePlan.GetUUID();
             _offlineRegistrationUrl = MaintenancePlan.GetOfflineRegistrationUrl(_key, _uuid);
         }
 
