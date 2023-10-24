@@ -11,7 +11,7 @@ namespace Leosac.WpfApp.Domain
     /// </summary>
     public class CommandGroup : FreezableCollection<CommandReference>, ICommand
     {
-        public CommandGroup() : base()
+        public CommandGroup()
         {
             var me_colchange = this as INotifyCollectionChanged;
             me_colchange.CollectionChanged += OnCommandsCollectionChanged;

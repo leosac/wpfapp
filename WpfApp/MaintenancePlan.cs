@@ -54,11 +54,6 @@ namespace Leosac.WpfApp
             }
         }
 
-        public MaintenancePlan()
-        {
-
-        }
-
         public string? LicenseKey { get; set; }
 
         [JsonIgnore]

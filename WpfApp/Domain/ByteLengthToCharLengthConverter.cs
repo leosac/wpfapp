@@ -25,7 +25,7 @@ namespace Leosac.WpfApp.Domain
             }
 
             var length = System.Convert.ToUInt32(value);
-            return (uint)(length / 2);
+            return length / 2;
         }
     }
 }

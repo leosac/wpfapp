@@ -5,3 +5,4 @@ WPF UI library for Leosac branded desktop application.
 ## License
 
 The source code of this library is distributed under the **LGPLv3** license.
+
