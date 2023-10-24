@@ -9,7 +9,7 @@ namespace Leosac.WpfApp
     public abstract class PermanentConfig<T> : ObservableObject where T : PermanentConfig<T>, new()
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
-        static JsonSerializerSettings _jsonSettings;
+        static readonly JsonSerializerSettings _jsonSettings;
 
         static PermanentConfig()
         {
@@ -36,7 +36,7 @@ namespace Leosac.WpfApp
         {
             log.Info("Saving configuration to file...");
             var serialized = JsonConvert.SerializeObject(this, _jsonSettings);
-            System.IO.File.WriteAllText(filePath, serialized, Encoding.UTF8);
+            File.WriteAllText(filePath, serialized, Encoding.UTF8);
             log.Info("Configuration saved.");
         }
 
@@ -48,9 +48,9 @@ namespace Leosac.WpfApp
         public static T? LoadFromFile(string filePath)
         {
             log.Info("Loading configuration from file...");
-            if (System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
-                var serialized = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
+                var serialized = File.ReadAllText(filePath, Encoding.UTF8);
                 var config = JsonConvert.DeserializeObject<T>(serialized, _jsonSettings);
                 log.Info("Configuration loaded from file.");
                 return config;
@@ -72,11 +72,15 @@ namespace Leosac.WpfApp
             var appData = (LeosacAppInfo.Instance?.PerUserInstallation).GetValueOrDefault(true) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(appData, "Leosac");
             if (!Directory.Exists(path) && createFolders)
+            {
                 Directory.CreateDirectory(path);
+            }
 
             path = Path.Combine(path, LeosacAppInfo.Instance?.ApplicationName ?? "Test");
             if (!Directory.Exists(path) && createFolders)
+            {
                 Directory.CreateDirectory(path);
+            }
 
             return Path.Combine(path, fileName);
         }

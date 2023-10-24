@@ -26,7 +26,9 @@ namespace Leosac.WpfApp
             {
                 var client = new HttpClient();
                 if (string.IsNullOrEmpty(LeosacAppInfo.Instance?.ApplicationCode))
-                    throw new Exception("Application Code is required to check for updates.");
+                {
+                    throw new MaintenanceException("Application Code is required to check for updates.");
+                }
                 using var response = client.GetAsync(string.Format("https://download.leosac.com/{0}/latestversion", LeosacAppInfo.Instance.ApplicationCode)).Result;
                 using var content = response.Content;
                 var json = content.ReadAsStringAsync().Result;

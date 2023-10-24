@@ -29,7 +29,9 @@ namespace Leosac.WpfApp.Domain
         public bool CanExecute(object? parameter)
         {
             if (Command != null)
+            {
                 return Command.CanExecute(parameter);
+            }
             return false;
         }
 
@@ -42,17 +44,13 @@ namespace Leosac.WpfApp.Domain
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var commandReference = d as CommandReference;
-            var oldCommand = e.OldValue as ICommand;
-            var newCommand = e.NewValue as ICommand;
-
-            if (commandReference != null)
+            if (d is CommandReference commandReference)
             {
-                if (oldCommand != null)
+                if (e.OldValue is ICommand oldCommand)
                 {
                     oldCommand.CanExecuteChanged -= commandReference.CanExecuteChanged;
                 }
-                if (newCommand != null)
+                if (e.NewValue is ICommand newCommand)
                 {
                     newCommand.CanExecuteChanged += commandReference.CanExecuteChanged;
                 }

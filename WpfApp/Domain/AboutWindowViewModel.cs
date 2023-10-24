@@ -39,7 +39,8 @@ namespace Leosac.WpfApp.Domain
                 new Library("log4net", "Apache v2", "Logging library", "https://logging.apache.org/log4net/"),
                 new Library("MaterialDesignInXaml", "MIT", "Graphic library", "http://materialdesigninxaml.net/"),
                 new Library("Json.NET", "MIT", "JSON library", "https://www.newtonsoft.com/json"),
-                new Library("CommunityToolkit.Mvvm", "MIT", "MVVM library", "https://github.com/CommunityToolkit/dotnet")
+                new Library("CommunityToolkit.Mvvm", "MIT", "MVVM library", "https://github.com/CommunityToolkit/dotnet"),
+                new Library("WpfApp", "LGPL", "WPF UI library", "https://github.com/leosac/wpfapp")
             });
 
             _showSourceCodeLicense = true;

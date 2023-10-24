@@ -1,37 +1,20 @@
 ﻿using log4net.Appender;
 using log4net.Core;
-using log4net.Layout;
 using log4net;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 namespace Leosac.WpfApp
 {
     public class NotifyAppender : AppenderSkeleton, INotifyPropertyChanged
     {
-        public NotifyAppender()
-        {
-            
-        }
-
         #region Members and events
-        private static object objlock = new object();
-        private static string _notification = string.Empty;
+        private static readonly object objlock = new();
         private static int _maxlines = 100;
-        private event PropertyChangedEventHandler? _propertyChanged;
-
-        public event PropertyChangedEventHandler? PropertyChanged
-        {
-            add { _propertyChanged += value; }
-            remove { _propertyChanged -= value; }
-        }
+        public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
         /// <summary>
@@ -39,13 +22,13 @@ namespace Leosac.WpfApp
         /// </summary>
         public string Notification
         {
-            get => String.Join(Environment.NewLine, NotificationLines);
+            get => string.Join(Environment.NewLine, NotificationLines);
         }
 
         /// <summary>
         /// Get or set the notification message lines.
         /// </summary>
-        public ObservableCollection<string> NotificationLines = new ObservableCollection<string>();
+        public ObservableCollection<string> NotificationLines = new();
 
         /// <summary>
         /// Get or set the maximum number of lines.
@@ -68,11 +51,7 @@ namespace Leosac.WpfApp
         /// </summary>
         private void OnChange(string? propertyName = null)
         {
-            var handler = _propertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -102,7 +81,7 @@ namespace Leosac.WpfApp
         /// <param name="loggingEvent">The log event.</param>
         protected override void Append(LoggingEvent loggingEvent)
         {
-            StringWriter writer = new StringWriter(CultureInfo.InvariantCulture);
+            var writer = new StringWriter(CultureInfo.InvariantCulture);
             Layout.Format(writer, loggingEvent);
             lock (objlock)
             {

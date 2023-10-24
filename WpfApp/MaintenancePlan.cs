@@ -93,7 +93,7 @@ namespace Leosac.WpfApp
             {
                 var error = "The request failed without details.";
                 log.Error(error);
-                throw new Exception(error);
+                throw new MaintenanceException(error);
             }
 
             var jobj = JObject.Parse(result);
@@ -109,7 +109,7 @@ namespace Leosac.WpfApp
                 {
                     var error = string.Format("The request failed with error: {0}", (string?)jobj["data"]?["error"] ?? (string?)jobj["data"]?["message"]);
                     log.Error(error);
-                    throw new Exception(error);
+                    throw new MaintenanceException(error);
                 }
             }
 
@@ -119,7 +119,9 @@ namespace Leosac.WpfApp
         public void RegisterPlan(string licenseKey, string? email = null, string? code = null)
         {
             if (string.IsNullOrEmpty(licenseKey))
-                throw new Exception("License/Plan key is required.");
+            {
+                throw new MaintenanceException("License/Plan key is required.");
+            }
 
             var oldKey = LicenseKey;
             if (string.IsNullOrEmpty(code))
@@ -131,7 +133,9 @@ namespace Leosac.WpfApp
                 {
                     var strexpire = (string?)data?["expire_date"];
                     if (!string.IsNullOrEmpty(strexpire))
+                    {
                         expire = DateTime.Parse(strexpire);
+                    }
                 }
                 data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion), new string[] { "instance_already_activated" });
 
@@ -156,7 +160,7 @@ namespace Leosac.WpfApp
                     LicenseKey = oldKey;
                     var error = "Invalid verification code.";
                     log.Error(error);
-                    throw new Exception(error);
+                    throw new MaintenanceException(error);
                 }
             }
         }
@@ -276,9 +280,13 @@ namespace Leosac.WpfApp
         {
             var url = string.Format("{0}register-plan?", BASE_URL);
             if (!string.IsNullOrEmpty(key))
+            {
                 url += string.Format("serial_key={0}&", key);
+            }
             if (!string.IsNullOrEmpty(uuid))
+            {
                 url += string.Format("instance={0}", uuid);
+            }
             return url;
         }
     }
