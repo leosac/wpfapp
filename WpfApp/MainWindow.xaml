@@ -145,8 +145,8 @@
                             <TextBlock Text="{x:Static properties:Resources.MaintenancePlanAdvert2}" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="2" />
                         </StackPanel>
                         <WrapPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="15,5,15,5" MinWidth="100">
-                            <Button x:Name="btnSubscribe" Content="{x:Static properties:Resources.Subscribe}" Click="btnSubscribe_Click" Margin="2"/>
-                            <TextBlock x:Name="linkRegister" FontSize="9" Text="{x:Static properties:Resources.RegisterLink}" Margin="2" Cursor="Hand" TextDecorations="Underline" HorizontalAlignment="Center" MouseDown="linkRegister_MouseDown" />
+                            <Button x:Name="btnSubscribe" Content="{x:Static properties:Resources.Subscribe}" Click="BtnSubscribe_Click" Margin="2"/>
+                            <TextBlock x:Name="linkRegister" FontSize="9" Text="{x:Static properties:Resources.RegisterLink}" Margin="2" Cursor="Hand" TextDecorations="Underline" HorizontalAlignment="Center" MouseDown="LinkRegister_MouseDown" />
                         </WrapPanel>
                     </Grid>
                 </materialDesign:ColorZone>

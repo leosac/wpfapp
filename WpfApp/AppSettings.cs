@@ -1,17 +1,12 @@
-﻿using Leosac.WpfApp.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Leosac.WpfApp
 {
     public class AppSettings : PermanentConfig<AppSettings>
     {
-        private static object _objlock = new object();
+        private static readonly object _objlock = new();
         private static AppSettings? _singleton;
 
         public static AppSettings GetSingletonInstance(bool forceRecreate = false)
@@ -29,18 +24,37 @@ namespace Leosac.WpfApp
 
         public AppSettings()
         {
-            InstallationId = Guid.NewGuid().ToString("D");
-            UseDarkTheme = false;
-            IsAutoUpdateEnabled = true;
+            _installationId = Guid.NewGuid().ToString("D");
+            _isAutoUpdateEnabled = true;
         }
 
-        public string InstallationId { get; set; }
+        private string _installationId;
+        public string InstallationId
+        {
+            get => _installationId;
+            set => SetProperty(ref _installationId, value);
+        }
 
-        public bool UseDarkTheme { get; set; }
+        private bool _useDarkTheme;
+        public bool UseDarkTheme
+        {
+            get => _useDarkTheme;
+            set => SetProperty(ref _useDarkTheme, value);
+        }
 
-        public bool IsAutoUpdateEnabled { get; set; }
+        private bool _isAutoUpdateEnabled;
+        public bool IsAutoUpdateEnabled
+        {
+            get => _isAutoUpdateEnabled;
+            set => SetProperty(ref _isAutoUpdateEnabled, value);
+        }
 
-        public string? Language { get; set; }
+        private string? _language;
+        public string? Language
+        {
+            get => _language;
+            set => SetProperty(ref _language, value);
+        }
 
         public static FileVersionInfo? GetFileVersionInfo()
         {

@@ -37,6 +37,6 @@
             </ToolBar>
         </ToolBarTray>
         <TextBox x:Name="tbxLogOutput" Text="{Binding Log.Notification, Mode=OneWay}" FontSize="{Binding SelectedFontSize, Mode=OneWay}" IsReadOnly="True"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10" TextChanged="tbxLogOutput_TextChanged"/>
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10" TextChanged="TbxLogOutput_TextChanged"/>
     </DockPanel>
 </Window>

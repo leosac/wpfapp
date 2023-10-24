@@ -1,22 +1,9 @@
 ﻿using Leosac.WpfApp.Domain;
-using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Leosac.WpfApp
 {
@@ -49,12 +36,12 @@ namespace Leosac.WpfApp
             MenuToggleButton.IsChecked = false;
         }
 
-        private void btnSubscribe_Click(object sender, RoutedEventArgs e)
+        private void BtnSubscribe_Click(object sender, RoutedEventArgs e)
         {
             MaintenancePlan.OpenSubscription();
         }
 
-        private void linkRegister_MouseDown(object sender, MouseButtonEventArgs e)
+        private void LinkRegister_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MaintenancePlan.OpenRegistration();
         }

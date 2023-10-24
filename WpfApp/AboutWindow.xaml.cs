@@ -1,19 +1,8 @@
 ﻿using Leosac.WpfApp.Domain;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Leosac.WpfApp
 {
@@ -32,12 +21,12 @@ namespace Leosac.WpfApp
             }
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
 
-        private void linkWebsite_MouseDown(object sender, MouseButtonEventArgs e)
+        private void LinkWebsite_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var ps = new ProcessStartInfo("https://leosac.com/")
             {
@@ -47,7 +36,7 @@ namespace Leosac.WpfApp
             Process.Start(ps);
         }
 
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is AboutWindowViewModel model)
             {
@@ -59,12 +48,12 @@ namespace Leosac.WpfApp
             }
         }
 
-        private void btnSubscribe_Click(object sender, RoutedEventArgs e)
+        private void BtnSubscribe_Click(object sender, RoutedEventArgs e)
         {
             MaintenancePlan.OpenSubscription();
         }
 
-        private void btnDownloadUpdate_Click(object sender, RoutedEventArgs e)
+        private void BtnDownloadUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is AboutWindowViewModel model)
             {
@@ -72,7 +61,7 @@ namespace Leosac.WpfApp
             }
         }
 
-        private void btnCheckUpdate_Click(object sender, RoutedEventArgs e)
+        private void BtnCheckUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is AboutWindowViewModel model)
             {
