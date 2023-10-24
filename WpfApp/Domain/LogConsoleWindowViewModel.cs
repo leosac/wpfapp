@@ -23,19 +23,18 @@ namespace Leosac.WpfApp.Domain
             ClearCommand = new RelayCommand(
                 () =>
                 {
-                    if (Log != null)
-                    {
-                        Log.ClearNotifications();
-                    }
+                    Log?.ClearNotifications();
                 });
             SaveCommand = new RelayCommand(
                 () =>
                 {
                     if (Log != null)
                     {
-                        var sfd = new SaveFileDialog();
-                        sfd.AddExtension = true;
-                        sfd.Filter = "Text Files|*.txt";
+                        var sfd = new SaveFileDialog
+                        {
+                            AddExtension = true,
+                            Filter = "Text Files|*.txt"
+                        };
                         if (sfd.ShowDialog() == true)
                         {
                             System.IO.File.WriteAllText(sfd.FileName, Log.Notification);

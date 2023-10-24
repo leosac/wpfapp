@@ -8,7 +8,11 @@ namespace Leosac.WpfApp.Domain
     {
         public class Library
         {
-            public Library(string name, string license, string? description = null, string? url = null)
+            public Library(string name, string license) : this(name, license, null) { }
+
+            public Library(string name, string license, string? description) : this(name, license, description, null) { }
+
+            public Library(string name, string license, string? description, string? url)
             {
                 Name = name;
                 License = license;

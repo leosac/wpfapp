@@ -11,11 +11,6 @@ namespace Leosac.WpfApp.Domain
     /// </summary>
     public class CommandReference : Freezable, ICommand
     {
-        public CommandReference()
-        {
-            // Blank
-        }
-
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(CommandReference), new PropertyMetadata(new PropertyChangedCallback(OnCommandChanged)));
 
         public ICommand Command

@@ -9,7 +9,9 @@ namespace Leosac.WpfApp.Domain
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
+            {
                 return Binding.DoNothing;
+            }
 
             var length = System.Convert.ToUInt32(value);
             return length * 2;
@@ -18,7 +20,9 @@ namespace Leosac.WpfApp.Domain
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
+            {
                 return Binding.DoNothing;
+            }
 
             var length = System.Convert.ToUInt32(value);
             return (uint)(length / 2);

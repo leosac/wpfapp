@@ -8,14 +8,16 @@ namespace Leosac.WpfApp.Domain
     public class NavItem : ObservableObject
     {
         private readonly Type _contentType;
-        private object? _dataContext;
+        private readonly object? _dataContext;
 
         private object? _content;
         private ScrollBarVisibility _horizontalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto;
         private ScrollBarVisibility _verticalScrollBarVisibilityRequirement = ScrollBarVisibility.Auto;
         private Thickness _marginRequirement = new(16);
 
-        public NavItem(string name, Type contentType, string icon, object? dataContext = null)
+        public NavItem(string name, Type contentType, string icon) : this(name, contentType, icon, null) { }
+
+        public NavItem(string name, Type contentType, string icon, object? dataContext)
         {
             Name = name;
             _contentType = contentType;

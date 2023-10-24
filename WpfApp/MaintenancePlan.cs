@@ -28,7 +28,12 @@ namespace Leosac.WpfApp
         private static readonly object _objlock = new();
         private static MaintenancePlan? _singleton;
 
-        public static MaintenancePlan GetSingletonInstance(bool forceRecreate = false)
+        public static MaintenancePlan GetSingletonInstance()
+        {
+            return GetSingletonInstance(false);
+        }
+
+        public static MaintenancePlan GetSingletonInstance(bool forceRecreate)
         {
             lock (_objlock)
             {
@@ -84,7 +89,12 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private static JToken? QueryData(string url, string[]? ignoreErrorCodes = null)
+        private static JToken? QueryData(string url)
+        {
+            return QueryData(url, null);
+        }
+
+        private static JToken? QueryData(string url, string[]? ignoreErrorCodes)
         {
             var client = new HttpClient();
             var req = client.GetStringAsync(url);
@@ -116,7 +126,17 @@ namespace Leosac.WpfApp
             return jobj["data"];
         }
 
-        public void RegisterPlan(string licenseKey, string? email = null, string? code = null)
+        public void RegisterPlan(string licenseKey)
+        {
+            RegisterPlan(licenseKey, null, null);
+        }
+
+        public void RegisterPlan(string licenseKey, string? email)
+        {
+            RegisterPlan(licenseKey, email, null);
+        }
+
+        public void RegisterPlan(string licenseKey, string? email, string? code)
         {
             if (string.IsNullOrEmpty(licenseKey))
             {
@@ -127,7 +147,7 @@ namespace Leosac.WpfApp
             if (string.IsNullOrEmpty(code))
             {
                 var fragments = licenseKey.Split('-');
-                var data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=check&product_id={1}&serial_key={2}", BASE_URL, fragments[0], licenseKey));
+                var data = QueryData(string.Format("{0}?wc-api=serial-numbers-api&request=check&product_id={1}&serial_key={2}", BASE_URL, fragments[0], licenseKey));
                 DateTime? expire = null;
                 if (data?["expire_date"] != null)
                 {
@@ -137,10 +157,10 @@ namespace Leosac.WpfApp
                         expire = DateTime.Parse(strexpire);
                     }
                 }
-                data = QueryData(String.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion), new string[] { "instance_already_activated" });
+                data = QueryData(string.Format("{0}?wc-api=serial-numbers-api&request=activate&product_id={1}&serial_key={2}&instance={3}&email={4}&platform={5}", BASE_URL, fragments[0], licenseKey, GetUUID(), HttpUtility.UrlEncode(email), Environment.OSVersion), new[] { "instance_already_activated" });
 
                 var msg = (string?)(data?["message"]);
-                log.Info(String.Format("Registration succeeded with message: {0}.", msg));
+                log.Info(string.Format("Registration succeeded with message: {0}.", msg));
 
                 LicenseKey = licenseKey;
                 ExpirationDate = expire;
@@ -165,7 +185,12 @@ namespace Leosac.WpfApp
             }
         }
 
-        public string? ComputeCode(string? uuid = null)
+        public string? ComputeCode()
+        {
+            return ComputeCode(null);
+        }
+
+        public string? ComputeCode(string? uuid)
         {
             if (!string.IsNullOrEmpty(LicenseKey))
             {
@@ -218,7 +243,12 @@ namespace Leosac.WpfApp
             return false;
         }
 
-        private static byte[]? GetUUIDKey(string? uuid = null)
+        private static byte[]? GetUUIDKey()
+        {
+            return GetUUIDKey(null);
+        }
+
+        private static byte[]? GetUUIDKey(string? uuid)
         {
             if (string.IsNullOrEmpty(uuid))
             {

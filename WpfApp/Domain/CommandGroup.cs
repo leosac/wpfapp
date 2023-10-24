@@ -21,7 +21,7 @@ namespace Leosac.WpfApp.Domain
         {
             get
             {
-                return this as IList<CommandReference>;
+                return this;
             }
         }
 
@@ -33,33 +33,41 @@ namespace Leosac.WpfApp.Domain
         void OnCommandsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             // We have a new child command so our ability to execute may have changed.
-            this.OnCanExecuteChanged();
+            OnCanExecuteChanged();
 
             if (e.NewItems != null && 0 < e.NewItems.Count)
             {
                 foreach (ICommand cmd in e.NewItems)
-                    cmd.CanExecuteChanged += this.OnChildCommandCanExecuteChanged;
+                {
+                    cmd.CanExecuteChanged += OnChildCommandCanExecuteChanged;
+                }
             }
 
             if (e.OldItems != null && 0 < e.OldItems.Count)
             {
                 foreach (ICommand cmd in e.OldItems)
-                    cmd.CanExecuteChanged -= this.OnChildCommandCanExecuteChanged;
+                {
+                    cmd.CanExecuteChanged -= OnChildCommandCanExecuteChanged;
+                }
             }
-            this.OnCanExecuteChanged();
+            OnCanExecuteChanged();
         }
 
         void OnChildCommandCanExecuteChanged(object? sender, EventArgs e)
         {
             // Bubble up the child commands CanExecuteChanged event so that
             // it will be observed by WPF.
-            this.OnCanExecuteChanged();
+            OnCanExecuteChanged();
         }
         public bool CanExecute(object? parameter)
         {
-            foreach (CommandReference cmd in this.Commands)
+            foreach (CommandReference cmd in Commands)
+            {
                 if (!cmd.CanExecute(parameter))
+                {
                     return false;
+                }
+            }
 
             return true;
         }
@@ -68,14 +76,15 @@ namespace Leosac.WpfApp.Domain
 
         protected virtual void OnCanExecuteChanged()
         {
-            if (this.CanExecuteChanged != null)
-                this.CanExecuteChanged(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void Execute(object? parameter)
         {
-            foreach (ICommand cmd in this.Commands)
+            foreach (ICommand cmd in Commands)
+            {
                 cmd.Execute(parameter);
+            }
         }
     }
 }

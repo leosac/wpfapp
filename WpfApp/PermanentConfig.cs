@@ -62,12 +62,22 @@ namespace Leosac.WpfApp
             }
         }
 
-        public string GetConfigFilePath(bool createFolders = false)
+        public string GetConfigFilePath()
+        {
+            return GetConfigFilePath(false);
+        }
+
+        public string GetConfigFilePath(bool createFolders)
         {
             return GetConfigFilePath(GetDefaultFileName(), createFolders);
         }
 
-        public static string GetConfigFilePath(string fileName, bool createFolders = false)
+        public static string GetConfigFilePath(string fileName)
+        {
+            return GetConfigFilePath(fileName, false);
+        }
+
+        public static string GetConfigFilePath(string fileName, bool createFolders)
         {
             var appData = (LeosacAppInfo.Instance?.PerUserInstallation).GetValueOrDefault(true) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(appData, "Leosac");

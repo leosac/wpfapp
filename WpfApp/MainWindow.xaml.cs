@@ -29,8 +29,14 @@ namespace Leosac.WpfApp
 
             while (dependencyObject != null)
             {
-                if (dependencyObject is ScrollBar) return;
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
+                if (dependencyObject is ScrollBar)
+                {
+                    dependencyObject = null;
+                }
+                else
+                {
+                    dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
+                }
             }
 
             MenuToggleButton.IsChecked = false;

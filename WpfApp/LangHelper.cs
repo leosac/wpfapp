@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Leosac.WpfApp
 {
-    public class LangHelper
+    public static class LangHelper
     {
         public static void ChangeLanguage(string lang)
         {

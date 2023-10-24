@@ -13,7 +13,12 @@ namespace Leosac.WpfApp
             EnqueueError(queue, null, message);
         }
 
-        public static void EnqueueError(ISnackbarMessageQueue? queue, Exception? ex, string? message = null)
+        public static void EnqueueError(ISnackbarMessageQueue? queue, Exception? ex)
+        {
+            EnqueueError(queue, ex, null);
+        }
+
+        public static void EnqueueError(ISnackbarMessageQueue? queue, Exception? ex, string? message)
         {
             if (ex != null)
             {
@@ -37,7 +42,7 @@ namespace Leosac.WpfApp
 
         public static void EnqueueMessage(ISnackbarMessageQueue? queue, object message)
         {
-            queue?.Enqueue(message, new PackIcon { Kind = PackIconKind.CloseBold }, (object? p) => { }, null, false, true, TimeSpan.FromSeconds(5));
+            queue?.Enqueue(message, new PackIcon { Kind = PackIconKind.CloseBold }, (object? _) => { }, null, false, true, TimeSpan.FromSeconds(5));
         }
 
         public static void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)

@@ -9,7 +9,12 @@ namespace Leosac.WpfApp
         private static readonly object _objlock = new();
         private static AppSettings? _singleton;
 
-        public static AppSettings GetSingletonInstance(bool forceRecreate = false)
+        public static AppSettings GetSingletonInstance()
+        {
+            return GetSingletonInstance(false);
+        }
+
+        public static AppSettings GetSingletonInstance(bool forceRecreate)
         {
             lock (_objlock)
             {

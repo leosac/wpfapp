@@ -66,32 +66,50 @@ namespace Leosac.WpfApp.Controls
         private void NUDButtonUP_Click(object sender, RoutedEventArgs e)
         {
             uint number;
-            if (NUDTextBox.Text != "") number = Convert.ToUInt32(NUDTextBox.Text);
-            else number = 0;
+            if (NUDTextBox.Text != "")
+            {
+                number = Convert.ToUInt32(NUDTextBox.Text);
+            }
+            else
+            {
+                number = 0;
+            }
+
             if (number < MaxValue)
+            {
                 CurrentValue = number + 1;
+            }
         }
 
         private void NUDButtonDown_Click(object sender, RoutedEventArgs e)
         {
             uint number;
-            if (NUDTextBox.Text != "") number = Convert.ToUInt32(NUDTextBox.Text);
-            else number = 0;
+            if (NUDTextBox.Text != "")
+            {
+                number = Convert.ToUInt32(NUDTextBox.Text);
+            }
+            else
+            {
+                number = 0;
+            }
+
             if (number > MinValue)
+            {
                 CurrentValue = number - 1;
+            }
         }
 
         private void NUDTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == System.Windows.Input.Key.Up)
+            if (e.Key == Key.Up)
             {
                 NUDButtonUP.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(NUDButtonUP, new object[] { true });
             }
 
 
-            if (e.Key == System.Windows.Input.Key.Down)
+            if (e.Key == Key.Down)
             {
                 NUDButtonDown.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(NUDButtonDown, new object[] { true });
@@ -100,20 +118,35 @@ namespace Leosac.WpfApp.Controls
 
         private void NUDTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Up)
+            if (e.Key == Key.Up)
+            {
                 typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(NUDButtonUP, new object[] { false });
+            }
 
-            if (e.Key == System.Windows.Input.Key.Down)
+            if (e.Key == Key.Down)
+            {
                 typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(NUDButtonDown, new object[] { false });
+            }
         }
 
         private void NUDTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             uint number = 0;
             if (!string.IsNullOrEmpty(NUDTextBox.Text))
-                if (!uint.TryParse(NUDTextBox.Text, out number)) NUDTextBox.Text = MinValue.ToString();
-            if (number > MaxValue) NUDTextBox.Text = MaxValue.ToString();
-            if (number < MinValue) NUDTextBox.Text = MinValue.ToString();
+            {
+                if (!uint.TryParse(NUDTextBox.Text, out number))
+                {
+                    NUDTextBox.Text = MinValue.ToString();
+                }
+            }
+            if (number > MaxValue)
+            {
+                NUDTextBox.Text = MaxValue.ToString();
+            }
+            if (number < MinValue)
+            {
+                NUDTextBox.Text = MinValue.ToString();
+            }
             NUDTextBox.SelectionStart = NUDTextBox.Text.Length;
 
             if (NUDTextBox.Text != Convert.ToString(CurrentValue))

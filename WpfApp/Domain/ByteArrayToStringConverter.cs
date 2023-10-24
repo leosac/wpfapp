@@ -9,7 +9,9 @@ namespace Leosac.WpfApp.Domain
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null && value is byte[] v)
+            {
                 return System.Convert.ToHexString(v);
+            }
 
             return Binding.DoNothing;
         }
@@ -17,7 +19,9 @@ namespace Leosac.WpfApp.Domain
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null && value is string v)
+            {
                 return System.Convert.FromHexString(v);
+            }
 
             return Binding.DoNothing;
         }

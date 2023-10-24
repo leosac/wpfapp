@@ -13,7 +13,7 @@ namespace Leosac.WpfApp
     {
         #region Members and events
         private static readonly object objlock = new();
-        private static int _maxlines = 100;
+        private int _maxlines = 100;
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
@@ -28,7 +28,7 @@ namespace Leosac.WpfApp
         /// <summary>
         /// Get or set the notification message lines.
         /// </summary>
-        public ObservableCollection<string> NotificationLines = new();
+        public ObservableCollection<string> NotificationLines { get; } = new();
 
         /// <summary>
         /// Get or set the maximum number of lines.

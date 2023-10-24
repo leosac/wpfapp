@@ -38,7 +38,7 @@ namespace Leosac.WpfApp
                 {
                     var fvi = AppSettings.GetFileVersionInfo();
 
-                    if (!string.IsNullOrEmpty(fvi?.ProductVersion) && !string.IsNullOrEmpty(UpdateVersion.VersionString))
+                    if (fvi != null && !string.IsNullOrEmpty(fvi.ProductVersion) && !string.IsNullOrEmpty(UpdateVersion.VersionString))
                     {
                         var currentVersion = new Version(fvi.ProductVersion);
                         var newVersion = new Version(UpdateVersion.VersionString);

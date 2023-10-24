@@ -9,7 +9,7 @@ namespace Leosac.WpfApp
     {
         public static LeosacAppInfo? Instance { get; set; }
 
-        public LeosacAppInfo()
+        protected LeosacAppInfo()
         {
             var fvi = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly()!.Location);
             ApplicationName = ApplicationTitle = fvi.ProductName ?? "Leosac Application";
