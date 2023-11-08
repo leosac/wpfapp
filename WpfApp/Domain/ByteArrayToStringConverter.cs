@@ -20,7 +20,14 @@ namespace Leosac.WpfApp.Domain
         {
             if (value != null && value is string v)
             {
-                return System.Convert.FromHexString(v);
+                try
+                {
+                    return System.Convert.FromHexString(v);
+                }
+                catch (FormatException)
+                {
+                    return Binding.DoNothing;
+                }
             }
 
             return Binding.DoNothing;
