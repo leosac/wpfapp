@@ -40,7 +40,13 @@ namespace Leosac.WpfApp
 
                     if (fvi != null && !string.IsNullOrEmpty(fvi.ProductVersion) && !string.IsNullOrEmpty(UpdateVersion.VersionString))
                     {
-                        var currentVersion = new Version(fvi.ProductVersion);
+                        var versionString = fvi.ProductVersion;
+                        var hashpos = versionString.IndexOf("+");
+                        if (hashpos > 0)
+                        {
+                            versionString = versionString[..hashpos];
+                        }
+                        var currentVersion = new Version(versionString);
                         var newVersion = new Version(UpdateVersion.VersionString);
 
                         if (newVersion > currentVersion)
