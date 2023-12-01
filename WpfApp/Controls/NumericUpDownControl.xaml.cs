@@ -141,17 +141,19 @@ namespace Leosac.WpfApp.Controls
             }
             if (number > MaxValue)
             {
-                NUDTextBox.Text = MaxValue.ToString();
+                number = MaxValue;
+                NUDTextBox.Text = number.ToString();
             }
             if (number < MinValue)
             {
-                NUDTextBox.Text = MinValue.ToString();
+                number = MinValue;
+                NUDTextBox.Text = number.ToString();
             }
             NUDTextBox.SelectionStart = NUDTextBox.Text.Length;
 
             if (NUDTextBox.Text != Convert.ToString(CurrentValue))
             {
-                CurrentValue = uint.Parse(NUDTextBox.Text);
+                CurrentValue = number;
             }
         }
     }
