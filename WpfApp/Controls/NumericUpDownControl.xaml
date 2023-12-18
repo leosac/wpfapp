@@ -29,6 +29,6 @@
                  materialDesign:HintAssist.HelperText="{Binding HelperText, ElementName=userControl}"
                  materialDesign:HintAssist.Hint="{Binding Hint, ElementName=userControl}"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                 Text="{Binding Path=CurrentValue, Mode=OneWay, ElementName=userControl}"/>
+                 Text="{Binding Path=CurrentValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ElementName=userControl}"/>
     </DockPanel>
 </UserControl>
