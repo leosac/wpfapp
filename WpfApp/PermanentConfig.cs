@@ -22,6 +22,8 @@ namespace Leosac.WpfApp
             };
         }
 
+        public static string? ConfigDirectory { get; set; }
+
         public static string GetDefaultFileName()
         {
             return string.Format("{0}.json", typeof(T).Name);
@@ -79,14 +81,22 @@ namespace Leosac.WpfApp
 
         public static string GetConfigFilePath(string fileName, bool createFolders)
         {
-            var appData = (LeosacAppInfo.Instance?.PerUserInstallation).GetValueOrDefault(true) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            var path = Path.Combine(appData, "Leosac");
-            if (!Directory.Exists(path) && createFolders)
+            string path;
+            if (!string.IsNullOrEmpty(ConfigDirectory))
             {
-                Directory.CreateDirectory(path);
+                path = ConfigDirectory;
             }
+            else
+            {
+                var appData = (LeosacAppInfo.Instance?.PerUserInstallation).GetValueOrDefault(true) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                path = Path.Combine(appData, "Leosac");
+                if (!Directory.Exists(path) && createFolders)
+                {
+                    Directory.CreateDirectory(path);
+                }
 
-            path = Path.Combine(path, LeosacAppInfo.Instance?.ApplicationName ?? "Test");
+                path = Path.Combine(path, LeosacAppInfo.Instance?.ApplicationName ?? "Test");
+            }
             if (!Directory.Exists(path) && createFolders)
             {
                 Directory.CreateDirectory(path);
