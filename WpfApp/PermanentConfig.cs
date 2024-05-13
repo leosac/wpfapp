@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Leosac.WpfApp
@@ -29,6 +30,8 @@ namespace Leosac.WpfApp
             return string.Format("{0}.json", typeof(T).Name);
         }
 
+        public bool IsUserConfiguration { get; protected set; }
+
         public virtual void SaveToFile()
         {
             SaveToFile(GetConfigFilePath(true));
@@ -42,9 +45,9 @@ namespace Leosac.WpfApp
             log.Info("Configuration saved.");
         }
 
-        public static T? LoadFromFile()
+        public static T? LoadFromFile(bool isUserConfiguration)
         {
-            return LoadFromFile(GetConfigFilePath(GetDefaultFileName()));
+            return LoadFromFile(GetConfigFilePath(GetDefaultFileName(), isUserConfiguration));
         }
 
         public static T? LoadFromFile(string filePath)
@@ -71,15 +74,15 @@ namespace Leosac.WpfApp
 
         public string GetConfigFilePath(bool createFolders)
         {
-            return GetConfigFilePath(GetDefaultFileName(), createFolders);
+            return GetConfigFilePath(GetDefaultFileName(), createFolders, IsUserConfiguration);
         }
 
-        public static string GetConfigFilePath(string fileName)
+        public static string GetConfigFilePath(string fileName, bool isUserConfiguration)
         {
-            return GetConfigFilePath(fileName, false);
+            return GetConfigFilePath(fileName, false, isUserConfiguration);
         }
 
-        public static string GetConfigFilePath(string fileName, bool createFolders)
+        public static string GetConfigFilePath(string fileName, bool createFolders, bool isUserConfiguration)
         {
             string path;
             if (!string.IsNullOrEmpty(ConfigDirectory))
@@ -88,7 +91,8 @@ namespace Leosac.WpfApp
             }
             else
             {
-                var appData = (LeosacAppInfo.Instance?.PerUserInstallation).GetValueOrDefault(true) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var perUserInstalation = LeosacAppInfo.Instance?.PerUserInstallation ?? IsPerUserRunningApplication();
+                var appData = (perUserInstalation || isUserConfiguration) ? Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) : Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 path = Path.Combine(appData, "Leosac");
                 if (!Directory.Exists(path) && createFolders)
                 {
@@ -103,6 +107,14 @@ namespace Leosac.WpfApp
             }
 
             return Path.Combine(path, fileName);
+        }
+
+        private static bool IsPerUserRunningApplication()
+        {
+            var exe = Assembly.GetEntryAssembly()?.Location;
+            return !string.IsNullOrEmpty(exe)
+                ? exe.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), StringComparison.InvariantCultureIgnoreCase)
+                : false;
         }
     }
 }

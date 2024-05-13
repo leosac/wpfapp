@@ -32,7 +32,7 @@ namespace Leosac.WpfApp
 
         public bool CheckPlan { get; protected set; }
 
-        public bool PerUserInstallation { get; protected set; }
+        public bool? PerUserInstallation { get; protected set; }
 
         public RelayCommand? SettingsCommand { get; protected set; }
 

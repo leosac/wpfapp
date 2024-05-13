@@ -20,7 +20,7 @@ namespace Leosac.WpfApp
             {
                 if (_singleton == null || forceRecreate)
                 {
-                    _singleton = LoadFromFile();
+                    _singleton = LoadFromFile(false);
                 }
 
                 return _singleton!;
@@ -40,25 +40,11 @@ namespace Leosac.WpfApp
             set => SetProperty(ref _installationId, value);
         }
 
-        private bool _useDarkTheme;
-        public bool UseDarkTheme
-        {
-            get => _useDarkTheme;
-            set => SetProperty(ref _useDarkTheme, value);
-        }
-
         private bool _isAutoUpdateEnabled;
         public bool IsAutoUpdateEnabled
         {
             get => _isAutoUpdateEnabled;
             set => SetProperty(ref _isAutoUpdateEnabled, value);
-        }
-
-        private string? _language;
-        public string? Language
-        {
-            get => _language;
-            set => SetProperty(ref _language, value);
         }
 
         public static FileVersionInfo? GetFileVersionInfo()

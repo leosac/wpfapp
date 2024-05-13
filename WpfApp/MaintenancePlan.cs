@@ -41,7 +41,7 @@ namespace Leosac.WpfApp
                 {
                     try
                     {
-                        _singleton = LoadFromFile();
+                        _singleton = LoadFromFile(false);
                         _singleton?.ParseCode(_singleton.Code);
                     }
                     catch (Exception ex)
