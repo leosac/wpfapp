@@ -10,11 +10,11 @@ namespace Leosac.WpfApp
     public abstract class PermanentConfig<T> : ObservableObject where T : PermanentConfig<T>, new()
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
-        static readonly JsonSerializerSettings _jsonSettings;
+        static readonly JsonSerializer _serializer;
 
         static PermanentConfig()
         {
-            _jsonSettings = new JsonSerializerSettings
+            _serializer = new JsonSerializer
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 NullValueHandling = NullValueHandling.Ignore,
@@ -40,8 +40,9 @@ namespace Leosac.WpfApp
         public void SaveToFile(string filePath)
         {
             log.Info("Saving configuration to file...");
-            var serialized = JsonConvert.SerializeObject(this, _jsonSettings);
-            File.WriteAllText(filePath, serialized, Encoding.UTF8);
+            using var file = File.CreateText(filePath);
+            using var writer = new JsonTextWriter(file);
+            _serializer.Serialize(writer, this);
             log.Info("Configuration saved.");
         }
 
@@ -55,8 +56,9 @@ namespace Leosac.WpfApp
             log.Info("Loading configuration from file...");
             if (File.Exists(filePath))
             {
-                var serialized = File.ReadAllText(filePath, Encoding.UTF8);
-                var config = JsonConvert.DeserializeObject<T>(serialized, _jsonSettings);
+                using var file = File.OpenText(filePath);
+                using var reader = new JsonTextReader(file);
+                var config = _serializer.Deserialize<T>(reader);
                 log.Info("Configuration loaded from file.");
                 return config;
             }
