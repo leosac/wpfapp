@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Leosac.SharedServices;
 using System;
 using System.Collections.ObjectModel;
 
@@ -48,7 +49,7 @@ namespace Leosac.WpfApp.Domain
             });
 
             _showSourceCodeLicense = true;
-            LeosacAppInfo.Instance?.InitializeAboutWindow(this);
+            LeosacWinAppInfo.WinInstance?.InitializeAboutWindow(this);
 
             var plan = MaintenancePlan.GetSingletonInstance();
             _isActivePlan = plan.IsActivePlan();

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Leosac.SharedServices;
 
 namespace Leosac.WpfApp.Domain
 {

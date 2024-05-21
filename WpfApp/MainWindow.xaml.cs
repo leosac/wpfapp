@@ -44,12 +44,12 @@ namespace Leosac.WpfApp
 
         private void BtnSubscribe_Click(object sender, RoutedEventArgs e)
         {
-            MaintenancePlan.OpenSubscription();
+            MaintenancePlanHelper.OpenSubscription();
         }
 
         private void LinkRegister_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MaintenancePlan.OpenRegistration();
+            MaintenancePlanHelper.OpenRegistration();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,7 +59,7 @@ namespace Leosac.WpfApp
                 model.InitFromSettings();
             }
 
-            LeosacAppInfo.Instance?.OnAppLoaded();
+            LeosacWinAppInfo.WinInstance?.OnAppLoaded();
         }
     }
 }

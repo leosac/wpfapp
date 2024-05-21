@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Leosac.SharedServices;
 
 namespace Leosac.WpfApp.Domain
 {
@@ -55,7 +56,7 @@ namespace Leosac.WpfApp.Domain
 
             SnackbarMessageQueue = snackbarMessageQueue;
             MenuItems = new ObservableCollection<NavItem>();
-            LeosacAppInfo.Instance?.InitializeMainWindow(this);
+            LeosacWinAppInfo.WinInstance?.InitializeMainWindow(this);
             if (MenuItems.Count > 0)
             {
                 SelectedItem = MenuItems[0];

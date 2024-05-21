@@ -8,9 +8,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:properties="clr-namespace:Leosac.WpfApp.Properties"
         mc:Ignorable="d"
-        Title="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=ApplicationTitle}"
+        Title="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationTitle}"
         Height="600" Width="800" MinHeight="400" MinWidth="600"
-        Icon="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=ApplicationLogo}"
+        Icon="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationLogo}"
         d:DataContext="{d:DesignInstance domain:MainWindowViewModel}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -115,19 +115,19 @@
                                 <Separator />
 
                                 <Button Content="{x:Static properties:Resources.LogConsole}" Command="{Binding Path=LogConsoleCommand}" />
-                                <Button Content="{x:Static properties:Resources.Settings}" Command="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=SettingsCommand}" Visibility="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=SettingsCommand, Converter={StaticResource NullableToVisibilityConverter}}" />
+                                <Button Content="{x:Static properties:Resources.Settings}" Command="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=SettingsCommand}" Visibility="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=SettingsCommand, Converter={StaticResource NullableToVisibilityConverter}}" />
                                 <Button Content="{x:Static properties:Resources.About}" Command="{Binding Path=OpenAboutCommand}" />
                             </StackPanel>
                         </materialDesign:PopupBox>
 
-                        <Image Margin="16,0,0,0" Source="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=ApplicationLogo}" Height="75" />
+                        <Image Margin="16,0,0,0" Source="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationLogo}" Height="75" />
 
                         <TextBlock Margin="-152,0,0,0"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
-                           AutomationProperties.Name="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=ApplicationTitle}"
+                           AutomationProperties.Name="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationTitle}"
                            FontSize="22"
-                           Text="{Binding Source={x:Static local:LeosacAppInfo.Instance}, Path=ApplicationTitle}" />
+                           Text="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationTitle}" />
                     </DockPanel>
                 </materialDesign:ColorZone>
 

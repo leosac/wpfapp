@@ -1,4 +1,5 @@
-﻿using Leosac.WpfApp.Domain;
+﻿using Leosac.SharedServices;
+using Leosac.WpfApp.Domain;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
@@ -40,7 +41,7 @@ namespace Leosac.WpfApp
         {
             if (DataContext is AboutWindowViewModel model)
             {
-                MaintenancePlan.OpenRegistration();
+                MaintenancePlanHelper.OpenRegistration();
 
                 var plan = MaintenancePlan.GetSingletonInstance();
                 model.IsActivePlan = plan.IsActivePlan();
@@ -50,7 +51,7 @@ namespace Leosac.WpfApp
 
         private void BtnSubscribe_Click(object sender, RoutedEventArgs e)
         {
-            MaintenancePlan.OpenSubscription();
+            MaintenancePlanHelper.OpenSubscription();
         }
 
         private void BtnDownloadUpdate_Click(object sender, RoutedEventArgs e)
