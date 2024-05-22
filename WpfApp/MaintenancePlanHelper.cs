@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Leosac.SharedServices;
+using System.Diagnostics;
 
 namespace Leosac.WpfApp
 {
@@ -19,8 +20,12 @@ namespace Leosac.WpfApp
 
         public static void OpenRegistration()
         {
-            var dialog = new PlanRegistrationWindow();
-            dialog.ShowDialog();
+            var plan = MaintenancePlan.GetSingletonInstance();
+            if (plan.EnsureElevation())
+            {
+                var dialog = new PlanRegistrationWindow();
+                dialog.ShowDialog();
+            }
         }
     }
 }
