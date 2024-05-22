@@ -34,7 +34,7 @@ namespace Leosac.WpfApp
 
         public static bool Elevate()
         {
-            if (!string.IsNullOrEmpty(Environment.ProcessPath) && MessageBox.Show("Additional permissions may be required. Would you like to restart the application with administrator privileges?", "User Elevation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (!string.IsNullOrEmpty(Environment.ProcessPath) && MessageBox.Show(Properties.Resources.UserElevation, Properties.Resources.UserElevationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 var psi = new ProcessStartInfo(Environment.ProcessPath, Environment.GetCommandLineArgs());
                 psi.UseShellExecute = true;

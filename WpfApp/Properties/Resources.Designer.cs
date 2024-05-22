@@ -493,6 +493,24 @@ namespace Leosac.WpfApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional permissions may be required. Would you like to restart the application with administrator privileges?.
+        /// </summary>
+        public static string UserElevation {
+            get {
+                return ResourceManager.GetString("UserElevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Elevation.
+        /// </summary>
+        public static string UserElevationTitle {
+            get {
+                return ResourceManager.GetString("UserElevationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UUID.
         /// </summary>
         public static string UUID {

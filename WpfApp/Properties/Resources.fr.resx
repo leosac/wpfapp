@@ -261,6 +261,12 @@
   <data name="Updates" xml:space="preserve">
     <value>Mises à jour</value>
   </data>
+  <data name="UserElevation" xml:space="preserve">
+    <value>Des permissions additionnelles peuvent être requises. Voulez-vous redémarrer l'application avec des privilèges administrateur ?</value>
+  </data>
+  <data name="UserElevationTitle" xml:space="preserve">
+    <value>Elévation de privilèges utilisateur</value>
+  </data>
   <data name="UUID" xml:space="preserve">
     <value>UUID</value>
   </data>
