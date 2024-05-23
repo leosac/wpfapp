@@ -21,6 +21,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Snackbar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <materialDesign:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
@@ -170,8 +173,9 @@
                     </ScrollViewer>
 
                     <materialDesign:Snackbar x:Name="MainSnackbar"
-                                       Grid.Row="1"
-                                       MessageQueue="{materialDesign:MessageQueue}" />
+                                             Grid.Row="1"
+                                             ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionDarkButton}"
+                                             MessageQueue="{materialDesign:MessageQueue}" />
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

@@ -37,12 +37,23 @@ namespace Leosac.WpfApp
                 message = "An error occured.";
             }
 
-            EnqueueMessage(queue, message);
+            var panel = new DockPanel();
+            var errorIcon = new PackIcon() { Kind = PackIconKind.ExclamationThick };
+            DockPanel.SetDock(errorIcon, Dock.Left);
+            panel.Children.Add(errorIcon);
+            panel.Children.Add(new TextBlock() { Text = message, Margin = new Thickness(5, 0, 0 ,0), TextWrapping = TextWrapping.Wrap });
+
+            EnqueueMessage(queue, panel);
+        }
+
+        public static void EnqueueMessage(ISnackbarMessageQueue? queue, PackIconKind icon, object message)
+        {
+            queue?.Enqueue(message, new PackIcon { Kind = icon }, (object? _) => { }, null, false, true, TimeSpan.FromSeconds(5));
         }
 
         public static void EnqueueMessage(ISnackbarMessageQueue? queue, object message)
         {
-            queue?.Enqueue(message, new PackIcon { Kind = PackIconKind.CloseBold }, (object? _) => { }, null, false, true, TimeSpan.FromSeconds(5));
+            EnqueueMessage(queue, PackIconKind.CloseBold, message);
         }
 
         public static void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)
