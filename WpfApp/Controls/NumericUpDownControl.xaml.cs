@@ -50,9 +50,9 @@ namespace Leosac.WpfApp.Controls
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register(nameof(MaxValue), typeof(uint), typeof(NumericUpDownControl),
             new FrameworkPropertyMetadata((uint)100));
 
-        public uint CurrentValue
+        public uint? CurrentValue
         {
-            get { return (uint)GetValue(CurrentValueProperty); }
+            get { return (uint?)GetValue(CurrentValueProperty); }
             set
             {
                 SetValue(CurrentValueProperty, value);
@@ -61,7 +61,7 @@ namespace Leosac.WpfApp.Controls
         }
 
         public static readonly DependencyProperty CurrentValueProperty = DependencyProperty.Register(nameof(CurrentValue), typeof(uint), typeof(NumericUpDownControl),
-            new FrameworkPropertyMetadata((uint)0));
+            new FrameworkPropertyMetadata((uint?)0));
 
         private void NUDButtonUP_Click(object sender, RoutedEventArgs e)
         {
