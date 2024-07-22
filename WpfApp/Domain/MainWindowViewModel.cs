@@ -143,32 +143,35 @@ namespace Leosac.WpfApp.Domain
             var settings = AppSettings.GetSingletonInstance();
             if (settings.IsAutoUpdateEnabled)
             {
-                var update = new AutoUpdate();
-                if (update.CheckUpdate())
+                Application.Current.Dispatcher.BeginInvoke(async () =>
                 {
-                    var wrapControl = new WrapPanel
+                    var update = new AutoUpdate();
+                    if (await update.CheckUpdate())
                     {
-                        Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(5),
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center
-                    };
-                    var textControl = new TextBlock
-                    {
-                        Text = Properties.Resources.NewUpdateAvailable
-                    };
-                    wrapControl.Children.Add(textControl);
-                    var buttonControl = new Button
-                    {
-                        Content = Properties.Resources.DownloadNow
-                    };
-                    buttonControl.Click += (sender, e) => { update.DownloadUpdate(); };
-                    buttonControl.Style = Application.Current.FindResource("MaterialDesignFlatButton") as Style;
-                    buttonControl.Margin = new Thickness(20, 0, 0, 0);
-                    wrapControl.Children.Add(buttonControl);
+                        var wrapControl = new WrapPanel
+                        {
+                            Orientation = Orientation.Horizontal,
+                            Margin = new Thickness(5),
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                        var textControl = new TextBlock
+                        {
+                            Text = Properties.Resources.NewUpdateAvailable
+                        };
+                        wrapControl.Children.Add(textControl);
+                        var buttonControl = new Button
+                        {
+                            Content = Properties.Resources.DownloadNow
+                        };
+                        buttonControl.Click += (sender, e) => { update.DownloadUpdate(); };
+                        buttonControl.Style = Application.Current.FindResource("MaterialDesignFlatButton") as Style;
+                        buttonControl.Margin = new Thickness(20, 0, 0, 0);
+                        wrapControl.Children.Add(buttonControl);
 
-                    SnackbarMessageQueue.Enqueue(wrapControl, null, null, null, false, true, TimeSpan.FromSeconds(5));
-                }
+                        SnackbarMessageQueue.Enqueue(wrapControl, null, null, null, false, true, TimeSpan.FromSeconds(5));
+                    }
+                });
             }
         }
     }
