@@ -6,13 +6,13 @@
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Leosac.$(AssemblyName)</PackageId>
-    <Version>1.22.0</Version>
+    <Version>1.23.0</Version>
     <Product>Leosac WpfApp Library</Product>
     <Description>C# Library components/helpers for Leosac branded Wpf applications .</Description>
     <Company>Leosac SAS</Company>
     <Authors>leosac</Authors>
     <AssemblyTitle>Leosac WpfApp</AssemblyTitle>
-    <Copyright>Copyright © Leosac 2024</Copyright>
+    <Copyright>Copyright © Leosac 2025</Copyright>
     <PackageProjectUrl>https://github.com/leosac/wpfapp</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/leosac/wpfapp.git</RepositoryUrl>
@@ -30,10 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="Leosac.SharedServices" Version="1.5.0" />
-    <PackageReference Include="log4net" Version="2.0.17" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Leosac.SharedServices" Version="1.9.0" />
+    <PackageReference Include="log4net" Version="3.0.3" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

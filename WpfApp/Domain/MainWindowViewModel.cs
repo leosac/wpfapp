@@ -120,7 +120,14 @@ namespace Leosac.WpfApp.Domain
             var paletteHelper = new PaletteHelper();
             var theme = paletteHelper.GetTheme();
 
-            theme.SetBaseTheme(isDarkTheme ? Theme.Dark : Theme.Light);
+            if (isDarkTheme)
+            {
+                theme.SetLightTheme();
+            }
+            else
+            {
+                theme.SetDarkTheme();
+            }
             paletteHelper.SetTheme(theme);
         }
 

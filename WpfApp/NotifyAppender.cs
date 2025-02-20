@@ -82,7 +82,7 @@ namespace Leosac.WpfApp
         protected override void Append(LoggingEvent loggingEvent)
         {
             var writer = new StringWriter(CultureInfo.InvariantCulture);
-            Layout.Format(writer, loggingEvent);
+            Layout?.Format(writer, loggingEvent);
             lock (objlock)
             {
                 NotificationLines.Add(writer.ToString());
