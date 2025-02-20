@@ -9,12 +9,12 @@
         xmlns:properties="clr-namespace:Leosac.WpfApp.Properties"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance domain:PlanRegistrationWindowViewModel}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="11"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Plan Registration" Height="600" Width="600">
     <Window.Resources>
@@ -32,7 +32,7 @@
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5">
             <Button x:Name="btnClose" IsDefault="True" Width="100" IsCancel="True" Content="{x:Static properties:Resources.Close}" Margin="10" Click="btnClose_Click"/>
         </WrapPanel>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding LastError}" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Foreground="{StaticResource SecondaryHueMidBrush}" HorizontalAlignment="Center" Margin="5" />
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding LastError}" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" HorizontalAlignment="Center" Margin="5" />
         <TabControl TabStripPlacement="Left" Margin="5,20,5,5">
             <TabItem Header="{x:Static properties:Resources.Online}">
                 <StackPanel>
@@ -54,7 +54,7 @@
                                         materialDesign:HintAssist.HelperText="{x:Static properties:Resources.UUIDHelper}"
                                         materialDesign:HintAssist.Hint="{x:Static properties:Resources.UUID}" Margin="10" IsReadOnly="True" />
                     <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Margin="3" Height="180">
+                        <materialDesign:Flipper Margin="3" Height="180">
                             <materialDesign:Flipper.FrontContent>
                                 <Button Width="200" MinHeight="100" Margin="8" Command="{x:Static materialDesign:Flipper.FlipCommand}" Style="{StaticResource MaterialDesignFlatButton}">
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
@@ -77,7 +77,7 @@
                                 </DockPanel>
                             </materialDesign:Flipper.BackContent>
                         </materialDesign:Flipper>
-                        <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" Margin="3">
+                        <materialDesign:Flipper Margin="3">
                             <materialDesign:Flipper.FrontContent>
                                 <Button Width="200" MinHeight="100" Margin="8" Command="{x:Static materialDesign:Flipper.FlipCommand}" Style="{StaticResource MaterialDesignFlatButton}">
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
@@ -91,7 +91,7 @@
                                     <Button DockPanel.Dock="Bottom" Width="184" Margin="5" Command="{x:Static materialDesign:Flipper.FlipCommand}" Content="{x:Static properties:Resources.Back}" Style="{StaticResource MaterialDesignFlatButton}" />
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{x:Static properties:Resources.Call}" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="3" HorizontalAlignment="Center" />
-                                        <TextBlock Text="+33 3 67 37 02 45" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="3" HorizontalAlignment="Center" Foreground="{StaticResource SecondaryHueMidBrush}" />
+                                        <TextBlock Text="+33 3 67 37 02 45" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="3" HorizontalAlignment="Center" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" />
                                     </StackPanel>
                                 </DockPanel>
                             </materialDesign:Flipper.BackContent>

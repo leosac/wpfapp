@@ -12,12 +12,12 @@
         Height="600" Width="800" MinHeight="400" MinWidth="600"
         Icon="{Binding Source={x:Static local:LeosacWinAppInfo.WinInstance}, Path=ApplicationLogo}"
         d:DataContext="{d:DesignInstance domain:MainWindowViewModel}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
         FontFamily="{DynamicResource MaterialDesignFont}" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Snackbar.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <materialDesign:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
+            <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <materialDesign:DialogHost DialogTheme="Inherit"
@@ -142,7 +143,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Grid.Column="0" Width="48" Height="48" Kind="SecurityOff" Margin="15,5,15,5" Foreground="{StaticResource SecondaryHueMidBrush}" />
+                        <materialDesign:PackIcon Grid.Column="0" Width="48" Height="48" Kind="SecurityOff" Margin="15,5,15,5" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" />
                         <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" Margin="5">
                             <TextBlock Text="{x:Static properties:Resources.MaintenancePlanAdvert1}" TextWrapping="Wrap" FontWeight="ExtraBold" HorizontalAlignment="Center" Margin="2" />
                             <TextBlock Text="{x:Static properties:Resources.MaintenancePlanAdvert2}" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="2" />

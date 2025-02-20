@@ -9,14 +9,22 @@
         xmlns:properties="clr-namespace:Leosac.WpfApp.Properties"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance domain:AboutWindowViewModel}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="11"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="{x:Static properties:Resources.About}" Height="500" Width="580" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <materialDesign:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
+            <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <materialDesign:BooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" FalseValue="Visible" TrueValue="Hidden" />
+            <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <materialDesign:ColorZone DockPanel.Dock="Top" Padding="15" Height="110" materialDesign:ElevationAssist.Elevation="Dp4" ClipToBounds="False" Mode="PrimaryMid">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -48,8 +56,8 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Margin="15,15,15,5" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="{x:Static properties:Resources.MaintenancePlan}" />
                         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsActivePlan,Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                            <materialDesign:PackIcon Kind="SecurityOff" Margin="2" Foreground="{StaticResource SecondaryHueMidBrush}" />
-                            <TextBlock Text="{x:Static properties:Resources.InvalidPlan}" Margin="2" Foreground="{StaticResource SecondaryHueMidBrush}" FontWeight="Bold" />
+                            <materialDesign:PackIcon Kind="SecurityOff" Margin="2" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" />
+                            <TextBlock Text="{x:Static properties:Resources.InvalidPlan}" Margin="2" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" FontWeight="Bold" />
                         </WrapPanel>
                         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsActivePlan,Converter={StaticResource BooleanToVisibilityConverter}}">
                             <materialDesign:PackIcon Kind="Security" Margin="2" />
@@ -57,7 +65,7 @@
                         </WrapPanel>
                         <WrapPanel Grid.Row="2" HorizontalAlignment="Center" Visibility="{Binding ExpirationDate, Converter={StaticResource NullableToVisibilityConverter}}">
                             <TextBlock Text="{x:Static properties:Resources.PlanExpiration}" Margin="2" />
-                            <TextBlock Text="{Binding ExpirationDate}" Margin="2" Foreground="{StaticResource SecondaryHueMidBrush}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding ExpirationDate}" Margin="2" Foreground="{StaticResource MaterialDesign.Brush.Secondary}" FontWeight="Bold" />
                         </WrapPanel>
                         <Expander HorizontalAlignment="Stretch" Header="{x:Static properties:Resources.Actions}" Grid.Row="3" IsExpanded="{Binding IsActivePlan, Mode=OneTime, Converter={StaticResource InvertBooleanConverter}}">
                             <WrapPanel Orientation="Vertical" HorizontalAlignment="Center">

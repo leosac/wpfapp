@@ -122,11 +122,11 @@ namespace Leosac.WpfApp.Domain
 
             if (isDarkTheme)
             {
-                theme.SetLightTheme();
+                theme.SetDarkTheme();
             }
             else
             {
-                theme.SetDarkTheme();
+                theme.SetLightTheme();
             }
             paletteHelper.SetTheme(theme);
         }
