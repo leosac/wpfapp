@@ -37,9 +37,6 @@
             <TabItem Header="{x:Static properties:Resources.Online}">
                 <StackPanel>
                     <TextBlock Text="{x:Static properties:Resources.InternetRequired}" Margin="10" />
-                    <TextBox DockPanel.Dock="Top" Text="{Binding Email}" Margin="10"
-                                        materialDesign:HintAssist.HelperText="{x:Static properties:Resources.RegisterEmailHelper}"
-                                        materialDesign:HintAssist.Hint="{x:Static properties:Resources.RegisterEmail}" />
                     <Button x:Name="btnRegisterOnline" Grid.Row="3" Width="150" Margin="10" Click="btnRegisterOnline_Click">
                         <WrapPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="RegistrationMark" Margin="0,0,10,0" />
