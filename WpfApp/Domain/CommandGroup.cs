@@ -59,6 +59,7 @@ namespace Leosac.WpfApp.Domain
             // it will be observed by WPF.
             OnCanExecuteChanged();
         }
+
         public bool CanExecute(object? parameter)
         {
             foreach (CommandReference cmd in Commands)
@@ -73,7 +74,6 @@ namespace Leosac.WpfApp.Domain
         }
 
         public event EventHandler? CanExecuteChanged;
-
         protected virtual void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
