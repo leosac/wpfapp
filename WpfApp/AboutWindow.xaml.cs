@@ -73,7 +73,7 @@ namespace Leosac.WpfApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             AutoUpdateToggleButton.IsChecked = true;
-            if (AppSettings.GetSingletonInstance().IsAutoUpdateEnabled)
+            if ((AppSettings.GetSingletonInstance()?.IsAutoUpdateEnabled).GetValueOrDefault(false))
             {
                 CheckUpdate();
             }
@@ -81,7 +81,7 @@ namespace Leosac.WpfApp
 
         private void AutoUpdateToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            var settings = AppSettings.GetSingletonInstance();
+            var settings = AppSettings.GetSingletonInstance() ?? new AppSettings();
             settings.IsAutoUpdateEnabled = AutoUpdateToggleButton.IsChecked.GetValueOrDefault(false);
             if (settings.IsAutoUpdateEnabled)
             {

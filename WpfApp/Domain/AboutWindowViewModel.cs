@@ -34,7 +34,7 @@ namespace Leosac.WpfApp.Domain
         {
             GetInfoFromAssembly();
 
-            _settings = AppSettings.GetSingletonInstance();
+            _settings = AppSettings.GetSingletonInstance() ?? new AppSettings();
             _autoUpdate = new AutoUpdate();
 
             Libraries = new ObservableCollection<Library>(new[]

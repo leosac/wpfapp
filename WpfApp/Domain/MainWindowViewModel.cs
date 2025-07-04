@@ -39,7 +39,7 @@ namespace Leosac.WpfApp.Domain
                         lang = "en-US";
                     }
 
-                    var settings = UserAppSettings.GetSingletonInstance();
+                    var settings = UserAppSettings.GetSingletonInstance() ?? new UserAppSettings();
                     settings.Language = lang;
                     settings.SaveToFile();
 
@@ -135,7 +135,7 @@ namespace Leosac.WpfApp.Domain
         {
             ModifyTheme(isDarkTheme);
 
-            var settings = UserAppSettings.GetSingletonInstance();
+            var settings = UserAppSettings.GetSingletonInstance() ?? new UserAppSettings();
             settings.UseDarkTheme = isDarkTheme;
             settings.SaveToFile();
         }
@@ -143,12 +143,12 @@ namespace Leosac.WpfApp.Domain
         public void InitFromSettings()
         {
             var userSettings = UserAppSettings.GetSingletonInstance();
-            if (userSettings.UseDarkTheme)
+            if (userSettings != null && userSettings.UseDarkTheme)
             {
                 IsDarkMode = userSettings.UseDarkTheme;
             }
             var settings = AppSettings.GetSingletonInstance();
-            if (settings.IsAutoUpdateEnabled)
+            if (settings != null && settings.IsAutoUpdateEnabled)
             {
                 Application.Current.Dispatcher.BeginInvoke(async () =>
                 {
