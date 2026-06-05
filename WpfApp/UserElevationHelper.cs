@@ -1,6 +1,7 @@
 ﻿using Leosac.SharedServices;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Principal;
 using System.Windows;
 
@@ -8,6 +9,8 @@ namespace Leosac.WpfApp
 {
     public static class UserElevationHelper
     {
+        private const int UserCancelledErrorCode = 1223;
+
         public static bool MayRequireElevation<T>(this PermanentConfig<T> config) where T : PermanentConfig<T>, new()
         {
             return (!config.IsUserConfiguration && !PermanentConfig<T>.IsPerUserRunningApplication() && !IsAdministrator());
@@ -15,10 +18,17 @@ namespace Leosac.WpfApp
 
         private static bool IsAdministrator()
         {
-            using (var identity = WindowsIdentity.GetCurrent())
+            try
             {
-                var principal = new WindowsPrincipal(identity);
-                return principal.IsInRole(WindowsBuiltInRole.Administrator);
+                using (var identity = WindowsIdentity.GetCurrent())
+                {
+                    var principal = new WindowsPrincipal(identity);
+                    return principal.IsInRole(WindowsBuiltInRole.Administrator);
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -34,17 +44,36 @@ namespace Leosac.WpfApp
 
         public static bool Elevate()
         {
-            if (!string.IsNullOrEmpty(Environment.ProcessPath) && MessageBox.Show(Properties.Resources.UserElevation, Properties.Resources.UserElevationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (string.IsNullOrEmpty(Environment.ProcessPath))
+                return false;
+            if (MessageBox.Show(Properties.Resources.UserElevation, Properties.Resources.UserElevationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return false;
+            try
             {
-                var psi = new ProcessStartInfo(Environment.ProcessPath, Environment.GetCommandLineArgs());
-                psi.UseShellExecute = true;
-                psi.Verb = "runas";
-                Process.Start(psi);
+                var psi = new ProcessStartInfo(Environment.ProcessPath)
+                {
+                    Arguments = string.Join(" ", Environment.GetCommandLineArgs().Skip(1)),
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
+                var process = Process.Start(psi);
+                if (process is null)
+                    return false;
                 Application.Current.Shutdown();
                 return true;
             }
-
-            return false;
+            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == UserCancelledErrorCode)
+            {
+                return false;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
