@@ -41,7 +41,7 @@ namespace Leosac.WpfApp
             var errorIcon = new PackIcon() { Kind = PackIconKind.ExclamationThick };
             DockPanel.SetDock(errorIcon, Dock.Left);
             panel.Children.Add(errorIcon);
-            panel.Children.Add(new TextBlock() { Text = message, Margin = new Thickness(5, 0, 0 ,0), TextWrapping = TextWrapping.Wrap });
+            panel.Children.Add(new TextBlock { Text = message, Margin = new Thickness(5, 0, 0, 0), TextWrapping = TextWrapping.Wrap });
 
             EnqueueMessage(queue, panel, duration);
         }

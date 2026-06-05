@@ -1,7 +1,8 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Leosac.WpfApp.Abstractions;
+using System;
 using System.Windows;
-using CommunityToolkit.Mvvm.ComponentModel;
+using System.Windows.Controls;
 
 namespace Leosac.WpfApp.Domain
 {
@@ -23,6 +24,7 @@ namespace Leosac.WpfApp.Domain
             _contentType = contentType;
             Icon = icon;
             _dataContext = dataContext;
+            _stickyHeaderSupport = dataContext as IStickyHeaderSupport;
         }
 
         public string Name { get; }
@@ -31,10 +33,12 @@ namespace Leosac.WpfApp.Domain
 
         public object? Content => _content ??= CreateContent();
 
-        public object? DataContext
-        {
-            get => _dataContext;
-        }
+        public object? DataContext => _dataContext;
+
+        private readonly IStickyHeaderSupport? _stickyHeaderSupport;
+        public IStickyHeaderSupport? StickyHeaderSupport => _stickyHeaderSupport;
+
+        public object? StickyHeader { get; set; }
 
         public ScrollBarVisibility HorizontalScrollBarVisibilityRequirement
         {

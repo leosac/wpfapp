@@ -6,20 +6,20 @@ namespace Leosac.WpfApp
 {
     public abstract class LeosacWinAppInfo : LeosacAppInfo
     {
-        public static LeosacWinAppInfo? WinInstance
-        {
-            get => Instance as LeosacWinAppInfo;
-        }
+        private const string DefaultApplicationLogoPath = "/WpfApp;component/images/leosac.png";
 
-        protected LeosacWinAppInfo()
-        {
-            ApplicationLogo = "/WpfApp;component/images/leosac.png";
-            SettingsCommand = null;
-        }
+        public static LeosacWinAppInfo? WinInstance => Instance as LeosacWinAppInfo;
 
         public string ApplicationLogo { get; protected set; }
 
         public RelayCommand? SettingsCommand { get; protected set; }
+
+        protected LeosacWinAppInfo()
+        {
+            ApplicationLogo = DefaultApplicationLogoPath;
+            SettingsCommand = null;
+        }
+
 
         public abstract void InitializeMainWindow(MainWindowViewModel model);
 

@@ -1,4 +1,5 @@
 ﻿using Leosac.WpfApp.Domain;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -15,9 +16,11 @@ namespace Leosac.WpfApp
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue!);
+            if (MainSnackbar.MessageQueue is null)
+                throw new InvalidOperationException("Snackbar queue not initialized.");
+            DataContext = new MainWindowViewModel(MainSnackbar.MessageQueue);
         }
+
 
         private void OnSelectedMenuItemChanged(object sender, DependencyPropertyChangedEventArgs e)
             => MainScrollViewer.ScrollToHome();
